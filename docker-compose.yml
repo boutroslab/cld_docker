@@ -1,0 +1,15 @@
+version: "3"
+services:
+    talencrisp:
+        image: cld_ecrisp_docker_talencrisp:latest
+        volumes:
+            - /Users/florian/Desktop/GitLab/CRISPR-software/CLD_ECRISP_docker/tmp:/tmp
+            - /Users/florian/Desktop/GitLab/CRISPR-software/CLD_ECRISP_docker/E-CRISP:/var/www/E-CRISP
+            - /Users/florian/Desktop/GitLab/CRISPR-software/CLD_ECRISP_docker/E-TALEN:/var/www/E-TALEN
+            - /Users/florian/Desktop/GitLab/CRISPR-software/CLD_ECRISP_docker/lighttpd:/etc/lighttpd
+            - /Users/florian/Desktop/GitLab/CRISPR-software/CLD_ECRISP_docker/databases:/data/DATABASEFILES/
+        ports:
+            - 8000:80
+        environment:
+            - DISPLAY=172.27.26.1:0
+            - RSYNC_PROXY=www-int2:3128
