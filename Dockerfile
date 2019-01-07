@@ -88,11 +88,6 @@ RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::MainWindow")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::NoteBook")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::Text::SuperText")'
 
-
-bowtie-1.2.1.1-src.zip; unzip bowtie-1.2.1.1-src.zip; cd bowtie-1.2.1.1; make; cp bowtie bowtie-* /usr/bin;
-
-bowtie2-2.3.2-source.zip; unzip bowtie2-2.3.2-source.zip; cd bowtie2-2.3.2; make; cp bowtie2 bowtie2-* /usr/bin;
-
 ENV BOWTIE2_VERSION 2.2.8
 ENV BOWTIE_VERSION 1.2.2
 
