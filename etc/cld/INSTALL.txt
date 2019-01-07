@@ -1,0 +1,32 @@
+INSTALL
+
+Install bowtie and bowtie2 into a directory, which is included in the computers PATH search variable.
+Such as /usr/bin/ or /usr/local/bin.
+
+cld is installed by copying the cld binary to the path of choice. 
+We recommend /usr/bin or /usr/local/bin as these paths are usually 
+already included in the computers PATH search variable.
+
+unzip cld-master.zip
+
+cd cld-master
+
+cd cld-your-system/
+
+sudo cp cld /usr/bin/
+
+OR is you are working already under Linux just:
+
+cd cld-master
+
+sudo cp cld /usr/bin/
+
+Added the custom interval tree Package for fast build and access to rebuild interval trees. 
+Install it via "perl Makefile.PL"; "make" ; "sudo make install" from Set-intervalTree. 
+All other dependencies of CLD are available online at CPAN.
+
+After successful installation, calling cld directly from the command line can start 
+cld, only requirement are rights to read and write from the input and 
+output directories passed to cld.
+
+For further information look at README
