@@ -2,6 +2,7 @@ FROM ubuntu:latest
 
 MAINTAINER Florian Heigwer "f.heigwer@dkfz.de"
 
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
 	&& apt-get install -y \
@@ -41,6 +42,7 @@ RUN apt-get update \
     xauth 
     
 ENV PERL_MM_USE_DEFAULT=1
+
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bundle::CPAN")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("FCGI")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::Perl")'
