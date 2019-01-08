@@ -1,49 +1,48 @@
-FROM sebp/lighttpd
+FROM ubuntu:latest
 
 MAINTAINER Florian Heigwer "f.heigwer@dkfz.de"
 
-# RUN wget http://dl-cdn.alpinelinux.org/alpine/v3.4/main/x86_64/APKINDEX.tar.gz
 
-RUN \
-    apk add --update --no-cache \
+RUN apt-get update \
+	&& apt-get install -y \
     unzip \
     perl \
-    perl-dev \
+    perl-debug \ 
+    perl-doc \ 
+    perl-modules \
+    perl-tk \
+    python \
+    ncbi-blast+ \
+    libcgi-fast-perl \
+    libperl-dev \
     wget \
     rsync \
     curl \
     gcc g++ make \ 
-    #build-essential \
     expat \
-    zlib \
+    zlib1g-dev \
     libxt-dev \
     libxml2-dev \
-    gd-dev \
+    libgd-dev \
     graphviz-dev \
-   	libc6-compat \
-	libstdc++ \
     sudo \
     git \
 	gnupg \	
-	mesa-gl \
-	chromium \
+	libglapi-mesa \
+	libosmesa6 \
 	ca-certificates \
 	ffmpeg \
 	hicolor-icon-theme \
-    db-dev
-  # needed for bowtie2
-RUN \
-    apk --no-cache add --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ \
-    libtbb libtbb-dev 
-  #  gdebi && rm -rf /var/lib/apt/lists/*
-RUN \
-     rm -rf /var/cache/apk/*
-
-
-# now install the reannotate-crispr PERL package
-# for CPAN to auto say yes to every question
+	libtbb-dev \
+    libdb-dev \
+    xserver-xorg \
+    xorg \
+    openbox \
+    xauth 
+    
 ENV PERL_MM_USE_DEFAULT=1
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bundle::CPAN")'
+RUN perl -MCPAN -e 'CPAN::Shell->install("FCGI")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::Perl")'
 # now install all the modules we need for crispr reannotator
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::DB::Fasta")'
@@ -101,16 +100,11 @@ RUN wget https://downloads.sourceforge.net/project/bowtie-bio/bowtie/$BOWTIE_VER
     && mv /usr/bin/bowtie2-2.2.8/* /usr/bin/ \
     && mv /usr/bin/bowtie-*/bowtie* /usr/bin/
 
-COPY etc/cld /var/www/cld
+COPY etc/cld /var/www/cld 
 
 RUN cp /var/www/cld/cld* /usr/bin/
 
 RUN cd /var/www/cld/depends/Set-IntervalTree-0.10-OD; perl Makefile.PL; make; make test && make install
-
-RUN touch /var/log/talecrisp.log
-RUN chown lighttpd:lighttpd /var/log/talecrisp.log 
-
-RUN chown lighttpd:lighttpd /var/www -R
 
 WORKDIR /var/www
 

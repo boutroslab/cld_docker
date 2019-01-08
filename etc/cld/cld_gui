@@ -66,7 +66,7 @@ if(-d $ENV{PAR_TEMP}."/inc/"){
 }
 $| = 1;
 
-my ($script_name,$script_version,$script_date,$script_years) = ('cld','1.4.6','2017-02-17','2013-2015');
+my ($script_name,$script_version,$script_date,$script_years) = ('cld','1.5','2019-01-08','2013-2019');
 
 
 ###################################################################################################################################################################################################
@@ -1057,7 +1057,7 @@ if ($something{"GUI"}) {
                                                                     -message => 'The Base folder you selected '.$something{"databasepath"}. "\n does not exist!",
                                                                 );
                                                             }else{
-                                                                system("wget ".$something{"precalc"}." -o ".$something{"databasepath"}."/$file_name");
+                                                                system("wget ".$something{"precalc"}." -P ".$something{"databasepath"});#." -o ".$something{"databasepath"}."/$file_name"
                                                                 if (!-e $something{"databasepath"}."/$file_name") {
                                                                      $make_database->messageBox(
                                                                          -icon => 'error',
@@ -1310,8 +1310,8 @@ if ($something{"GUI"}) {
 					)	;#
 					$opt_bowtie_version=$offtarget_options_frame->Optionmenu(
 					   -options => [	["bowtie" => "bowtie"],
-									   ["bowtie2" => "bowtie2"],
-                                       ["blast" => "blast"]
+									   ["bowtie2" => "bowtie2"]#,
+                                       #["blast" => "blast"]
                                        ],
 					   -textvariable => \$something{"bowtie_version"},
 					   -command => sub {
@@ -3248,24 +3248,23 @@ sub make_a_crispr_library{
                                           }
                                     }
                               }else{
-                                my $length=$something{"min_length"}-$something{"unspecific_leading_bases"}+length($something{"PAM"});
-                                 if ($something{"offtargetdb"} eq "gDNA") {
-                                        if (!-e  $databasepath.".blast.gDNA.nsq") {
-                                            system($aligner_path."makeblastdb -in ".$databasepath.".all.dna.fa -dbtype nucl -title ".$something{"ref_organism"}.".blast.gDNA -out ".$databasepath.".blast.gDNA -parse_seqids");
-                                        }
-                                        system( $aligner_path.'blastn -db '.$databasepath.'.blast.gDNA -query '. $temp_dir . "/" . 'temp_CRISPRS.fasta -task blastn-short -outfmt 15 -parse_deflines -num_threads '.$parallel_number.' | sed "s/lcl|//g" | grep "AS:i:'.$length.'"  > ' . $temp_dir .'/temp_out.bwt' );
-                                    }elsif($something{"offtargetdb"} eq "cDNA"){
-                                        if (!-e  $databasepath.".blast.cDNA.nsq") {
-                                                system($aligner_path."makeblastdb -in ".$databasepath.".cdna.all.fa -dbtype nucl -title ".$something{"ref_organism"}.".blast.cDNA -out ".$databasepath.".blast.cDNA -parse_seqids");
-                                        }
-                                         system( $aligner_path.'blastn -db '.$databasepath.'.blast.cDNA -query '. $temp_dir . "/" . 'temp_CRISPRS.fasta -task blastn-short -outfmt 15 -parse_deflines -num_threads '.$parallel_number.' | sed "s/lcl|//g" | grep "AS:i:'.$length.'"  > ' . $temp_dir .'/temp_out.bwt' );
-                                    }else{
-                                        if (!-e  $databasepath.".blast.genome.nsq") {
-                                                system($aligner_path."makeblastdb -in ".$databasepath.".dna.toplevel.fa -dbtype nucl -title ".$something{"ref_organism"}.".blast.genome -out ".$databasepath.".blast.genome -parse_seqids");
-                                         }
-                                        system( $aligner_path.'blastn -db '.$databasepath.'.blast.genome -query '. $temp_dir . "/" . 'temp_CRISPRS.fasta -task blastn-short -outfmt 15 -parse_deflines -num_threads '.$parallel_number.' | sed "s/lcl|//g" | grep "AS:i:'.$length.'"  > ' . $temp_dir .'/temp_out.bwt' );
-                                          
-                                    }
+                            #    my $length=$something{"min_length"}-$something{"unspecific_leading_bases"}+length($something{"PAM"});
+                            #     if ($something{"offtargetdb"} eq "gDNA") {
+                            #            if (!-e  $databasepath.".blast.gDNA.nsq") {
+                            #                system($aligner_path."makeblastdb -in ".$databasepath.".all.dna.fa -dbtype nucl -title ".$something{"ref_organism"}.".blast.gDNA -out ".$databasepath.".blast.gDNA -parse_seqids");
+                            #            }
+                            #            system( $aligner_path.'blastn -db '.$databasepath.'.blast.gDNA -query '. $temp_dir . "/" . 'temp_CRISPRS.fasta -task blastn-short -outfmt 15 -parse_deflines -num_threads '.$parallel_number.' | sed "s/lcl|//g" | grep "AS:i:'.$length.'"  > ' . $temp_dir .'/temp_out.bwt' );
+                            #        }elsif($something{"offtargetdb"} eq "cDNA"){
+                            #            if (!-e  $databasepath.".blast.cDNA.nsq") {
+                            #                    system($aligner_path."makeblastdb -in ".$databasepath.".cdna.all.fa -dbtype nucl -title ".$something{"ref_organism"}.".blast.cDNA -out ".$databasepath.".blast.cDNA -parse_seqids");
+                            #            }
+                            #             system( $aligner_path.'blastn -db '.$databasepath.'.blast.cDNA -query '. $temp_dir . "/" . 'temp_CRISPRS.fasta -task blastn-short -outfmt 15 -parse_deflines -num_threads '.$parallel_number.' | sed "s/lcl|//g" | grep "AS:i:'.$length.'"  > ' . $temp_dir .'/temp_out.bwt' );
+                            #        }else{
+                             #           if (!-e  $databasepath.".blast.genome.nsq") {
+                             #                   system($aligner_path."makeblastdb -in ".$databasepath.".dna.toplevel.fa -dbtype nucl -title ".$something{"ref_organism"}.".blast.genome -out ".$databasepath.".blast.genome -parse_seqids");
+                              #           }
+                               #         system( $aligner_path.'blastn -db '.$databasepath.'.blast.genome -query '. $temp_dir . "/" . 'temp_CRISPRS.fasta -task blastn-short -outfmt 17 -parse_deflines -num_threads '.$parallel_number.' | sed "s/lcl|//g" | grep "AS:i:'.$length.'"  > ' . $temp_dir .'/temp_out.bwt' );
+                                #    }
                                 
                               }
                               my $id="";
