@@ -1,4 +1,4 @@
-![]( https://cdn.rawgit.com/boutroslab/cld/master/logo.png )
+![]( https://cdn.rawgit.com/boutroslab/cld_docker/master/logo.png )
 
 [![DOI](https://zenodo.org/badge/20669/fheigwer/cld.svg)](https://zenodo.org/badge/latestdoi/20669/fheigwer/cld)
 
