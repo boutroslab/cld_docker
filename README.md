@@ -17,19 +17,23 @@ Here we describe CRISPR library designer (CLD), an integrated bioinformatics app
 **Quick-Start:**
 
 	1. To use the graphical interface
+	
 		 1.1 Mac:
 			  1.1.1 Install xquartz: https://www.xquartz.org/
 			  1.1.2 open -a XQuartz
 			  1.1.3 IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 			  1.1.4 xhost + $IP
 			  1.1.5 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter "docker run -e DISLPAY=$IP:0 -v ~/Desktop:/data boutroslab/cld_docker cld_gui"
+			  
 		 1.2 Windows:
 			  1.2.1 Install a command line package manager for windows: https://chocolatey.org/
 			  1.2.2 Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
 			  1.2.3 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter "docker run -e DISLPAY=<your IP>:0.0 -v ~/Desktop:/data boutroslab/cld_docker cld_gui"
+			  
 		 1.3 GUIed linux:
 			  1.3.1 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter "docker run -e DISLPAY=<your IP>:0.0 -v ~/Desktop:/data boutroslab/cld_docker cld_gui"
 			  1.3.2 When logging in remotely: log into your remote server by ssh -X
+			  
 	2. Download the database for your organism of interest.
  	3. Enter its name in the reference organism field on the start page.
  	4. Enter a list of gene identifiers in the "Gene List" tab and go to the "Design Parameter" tab to set your parameters.
