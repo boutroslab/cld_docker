@@ -1,4 +1,6 @@
-![]( https://github.com/boutroslab/cld_docker/blob/master/logo.png )
+![alt text][logo]
+
+[logo]: https://raw.githubusercontent.com/boutroslab/cld_docker/master/logo.png "There should be a logo"
 
 [![DOI](https://zenodo.org/badge/20669/fheigwer/cld.svg)](https://zenodo.org/badge/latestdoi/20669/fheigwer/cld)
 
@@ -14,19 +16,32 @@ Here we describe CRISPR library designer (CLD), an integrated bioinformatics app
 
 **Quick-Start:**
 
-On Mac/Linux\:
- 1. If you haven't, install Xquartz from http://www.xquartz.org/
-   
-   1.1 When logging in remotely: log into your remote server by ssh -X
- 2. Download CLD_GUI_Mac.zip or CLD_GUI_Ubuntu.zip according to your Operating system and unzip it.
- 3. Double click on the application or open it by ./CLD in the Terminal.
- 4. Download the database for your organism of interest.
- 5. Enter its name in the reference organism field on the start page.
- 6. Enter a list of gene identifiers in the "Gene List" tab and go to the "Design Parameter" tab to set your parameters.
- 7. Go to the "Start Analysis" tab to start sgRNA search.
- 8. The results will be created in the selected output directory ("Input/Output" tab).
+ 1. To use the graphical interface
+ 
+     Mac: 
+          1.1 Install xquartz: https://www.xquartz.org/
+          1.2 open -a XQuartz
+          1.3 IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
+          1.4 xhost + $IP
+          1.5 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter "docker run -e DISLPAY=$IP:0 -v ~/Desktop:/data boutroslab/cld_docker cld_gui"
+     Windows:
+         1.1 Install a command line package manager for windows: https://chocolatey.org/
+         1.2 Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
+         1.3 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter "docker run -e DISLPAY=<your IP>:0.0 -v ~/Desktop:/data boutroslab/cld_docker cld_gui"
+     GUIed linux:
+          1.1 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter "docker run -e DISLPAY=<your IP>:0.0 -v ~/Desktop:/data boutroslab/cld_docker cld_gui"
+          1.2 When logging in remotely: log into your remote server by ssh -X
+ 2. Download the database for your organism of interest.
+ 3. Enter its name in the reference organism field on the start page.
+ 4. Enter a list of gene identifiers in the "Gene List" tab and go to the "Design Parameter" tab to set your parameters.
+ 5. Go to the "Start Analysis" tab to start sgRNA search.
+ 6. The results will be created in the selected output directory ("Input/Output" tab).
 
 **Command-Line-Start:**
+
+Simply install docker to the point that docker run hello-world runs successfully and use cld as described below e.g:
+
+docker run -v ~/Desktop:/data boutroslab/cld_docker --help
 
 cld can be called either with “--version”, printing its version number and copyrights, 
 “--help” printing a more elusive help documentation and with “--task”. 
@@ -45,7 +60,7 @@ Database creation is called using the “--task=make_database” command
  	automatically download the latest toplevel FASTA, GFF and GTF files for the organism 
  	of interest and compile a database containing bowtie indexes, mygff files and 
  	reformatted sequence files. If not enough computing power is available to the user, 
- 	these databases also might be downloaded from http://www.dkfz.de/signaling/crispr-downloads/. 
+ 	these databases also might be downloaded from [here](http://www.dkfz.de/signaling/crispr-downloads/DATABASES). 
 
 Library design can either be done in two steps: “cld 
 	 --task=target_ident” and then “cld  --task=library_assembly” if the user wants 
@@ -60,5 +75,5 @@ Library design can either be done in two steps: “cld
  	consumption to be approximately 1 h wall-time for an 8-core cpu node.
 
  	
-For running cld from the command line the syntax as outlined in the MANUAL must be used.
+For running cld from the command line the syntax as outlined in the [MANUAL](https://github.com/boutroslab/cld/blob/master/MANUAL.md) must be used.
 
