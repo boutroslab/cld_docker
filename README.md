@@ -19,7 +19,8 @@ Here we describe CRISPR library designer (CLD), an integrated bioinformatics app
  1. To use the graphical interface
  
      Mac:
-          1.1 Install xquartz: https://www.xquartz.org/
+          
+	  1.1 Install xquartz: https://www.xquartz.org/
           1.2 open -a XQuartz
           1.3 IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
           1.4 xhost + $IP
