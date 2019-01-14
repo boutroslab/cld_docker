@@ -16,6 +16,8 @@ Here we describe CRISPR library designer (CLD), an integrated bioinformatics app
 
 **Quick-Start:**
 
+Install docker to the point that docker run hello-world runs successfully and use cld as described below e.g:
+
 	1. To use the graphical interface
 	
 		 1.1 Mac:
@@ -42,7 +44,7 @@ Here we describe CRISPR library designer (CLD), an integrated bioinformatics app
 
 **Command-Line-Start:**
 
-Simply install docker to the point that docker run hello-world runs successfully and use cld as described below e.g:
+Install docker to the point that docker run hello-world runs successfully and use cld as described below e.g:
 
 docker run -v ~/Desktop:/data boutroslab/cld_docker --help
 
