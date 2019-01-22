@@ -111,6 +111,8 @@ RUN cd /var/www/cld/depends/Set-IntervalTree-0.10-OD; perl Makefile.PL; make; ma
 WORKDIR /var/www
 
 ENV LANG en-US
+ENV LANGUAGE="en_US.UTF-8"
+ENV LC_ALL="C"
 
 COPY local.conf /etc/fonts/local.conf
 
