@@ -16,7 +16,7 @@ Here we describe CRISPR library designer (CLD), an integrated bioinformatics app
 
 **Quick-Start:**
 
-Also check out the pre-build docker at [dockerhub](https://hub.docker.com/r/boutroslab/cld_docker/dockerfile)
+Also check out the pre-build docker at [dockerhub](https://hub.docker.com/r/boutroslab/cld_docker)
 
 Install docker to the point that "docker run hello-world" runs successfully and use cld as described below e.g:
 
