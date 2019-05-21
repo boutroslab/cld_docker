@@ -55,7 +55,7 @@ cld can be called either with “--version”, printing its version number and c
 
 EXAMPLE to execute from the path containing all needed files:
 
-docker run -v ~/Desktop:/data boutroslab/cld_docker cld --task=end_to_end --output-dir=. --parameter-file=./params.txt --gene-list=./gene_list.txt		    
+docker run -v ~/Desktop:/data boutroslab/cld_docker cld --task=end_to_end --output-dir=/data --parameter-file=/data/params.txt --gene-list=/data/gene_list.txt		    
 
 cld can run 2 distinct tasks, database creation and 
 library design.
