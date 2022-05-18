@@ -30,15 +30,15 @@ Install docker to the point that `docker run hello-world` runs successfully and 
 		4. `xhost + $IP`
 		5. adapt `docker-compose.yaml` change to folder and enter
 			  
-```bash
-docker-compose up
-```
+		```bash
+		docker-compose up
+		```
 
-or enter 
-			  
-```bash
-docker run -e DISPLAY=$IP:0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
-```
+		or enter 
+
+		```bash
+		docker run -e DISPLAY=$IP:0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
+		```
 			  
 	2. Windows:
 	
@@ -46,15 +46,15 @@ docker run -e DISPLAY=$IP:0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
 		2. Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
 		3. adapt `docker-compose.yaml` change to folder and enter 
 
-```bash
-docker-compose up
-```
+		```bash
+		docker-compose up
+		```
 
-or enter 
-			  
-```bash		  
-docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
-```
+		or enter 
+
+		```bash		  
+		docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
+		```
 			  
 	3. GUIed linux:
 	
