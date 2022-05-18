@@ -18,46 +18,53 @@ Here we describe CRISPR library designer (CLD), an integrated bioinformatics app
 
 Also check out the pre-build docker at [dockerhub](https://hub.docker.com/r/boutroslab/cld_docker)
 
-Install docker to the point that "docker run hello-world" runs successfully and use cld as described below e.g:
+Install docker to the point that `docker run hello-world` runs successfully and use `cld` as described below e.g:
 
 	1. To use the graphical interface
 	
 		 1.1 Mac:
 			  1.1.1 Install xquartz: https://www.xquartz.org/
-			  1.1.2 open -a XQuartz
-			  1.1.3 IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
-			  1.1.4 xhost + $IP
-			  1.1.5 adapt docker-compose.yaml change to folder and enter
+			  1.1.2 `open -a XQuartz`
+			  1.1.3 `IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
+			  1.1.4 `xhost + $IP`
+			  1.1.5 adapt `docker-compose.yaml` change to folder and enter
 			  
-```
+```bash
 docker-compose up
 ```
 
 			  or enter 
 			  
-```
+```bash
 docker run -e DISPLAY=$IP:0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
 ```
 			  
 		 1.2 Windows:
 			  1.2.1 Install a command line package manager for windows: https://chocolatey.org/
 			  1.2.2 Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
-			  1.2.3 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter 
-```			  
+			  1.2.3 adapt docker-compose.yaml change to folder and enter 
+			  
+```bash
+docker-compose up
+```
+
+or enter 
+			  
+```bash		  
 docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
 ```
 			  
 		 1.3 GUIed linux:
-			  1.3.1 adapt docker-compose.yaml change to folder and enter 
+			  1.3.1 adapt `docker-compose.yaml` change to folder and enter 
 			  
-```			  
+```bash		  
 docker-compose up
 ```
 			  
 			  or enter 
 			  
-```
-docker run -e DISLPAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
+```bash
+docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
 ```
 			  1.3.2 When logging in remotely: log into your remote server by ssh -X
 			  
@@ -71,23 +78,23 @@ docker run -e DISLPAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gu
 
 Install docker to the point that docker run hello-world runs successfully and use cld as described below e.g:
 
-```
+```bash
 docker run -v ${PWD}:/data boutroslab/cld_docker cld --help
 ```
 
 cld can be called either with “--version”, printing its version number and copyrights, 
-“--help” printing a more elusive help documentation and with “--task”. 
+"--help" printing a more elusive help documentation and with “--task”. 
 
 EXAMPLE to execute from the path containing all needed files:
 
-```
+```bash
 docker run -v ${PWD}:/data boutroslab/cld_docker cld --task=end_to_end --output-dir=/data --parameter-file=/data/params.txt --gene-list=/data/gene_list.txt
 ```
 
 cld can run 2 distinct tasks, database creation and 
 library design.
 
-Database creation is called using the “--task=make_database” command 
+Database creation is called using the `--task=make_database` command 
 	giving the organism name of interest, as it is denoted in ENSEMBLs ftp folder structure
 	e.g. homo_sapiens, and the rsync url to the current ftp server of ENSEMBL, examples 
  	can be found when cld  --help is called. After calling this function CLD will 
@@ -96,11 +103,27 @@ Database creation is called using the “--task=make_database” command
  	reformatted sequence files. If not enough computing power is available to the user, 
  	these databases also might be downloaded from [here](http://www.dkfz.de/signaling/crispr-downloads/DATABASES). 
 
-Library design can either be done in two steps: “cld 
-	 --task=target_ident” and then “cld  --task=library_assembly” if the user wants 
+Library design can either be done in two steps: 
+
+```bash
+cld --task=target_ident
+```
+
+and then 
+
+```bash
+cld  --task=library_assembly
+```
+	if the user wants 
  	to separate the two steps for example in order to only identify target sites without 
  	compiling a clonable library. 
- 	Else “cld  --task=end_to_end” which automatically will perform the steps mentioned before 
+ 	Else 
+	
+```bash
+cld  --task=end_to_end
+```
+
+	which automatically will perform the steps mentioned before 
  	and present the end-result in a user defined output folder. 
  	For reasons of manageability for high throughput design, output files are kept 
  	as simple and standardised as possible. However a genome wide library targeting 
