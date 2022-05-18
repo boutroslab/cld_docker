@@ -30,45 +30,15 @@ Install docker to the point that `docker run hello-world` runs successfully and 
 		1.1.4. `xhost + $IP`
 		1.1.5. adapt `docker-compose.yaml` change to folder and enter
 			  
-```bash
-docker-compose up
-```
-
-or enter 
-			  
-```bash
-docker run -e DISPLAY=$IP:0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
-```
-			  
 	1.2 Windows:
 	
-	* Install a command line package manager for windows: https://chocolatey.org/
-	* Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
-	* adapt `docker-compose.yaml` change to folder and enter 
-
-```bash
-docker-compose up
-```
-
-or enter 
-			  
-```bash		  
-docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
-```
+		1.2.1 Install a command line package manager for windows: https://chocolatey.org/
+		1.2.2 Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
+		1.2.3 adapt `docker-compose.yaml` change to folder and enter 
 			  
 	1.3 GUIed linux:
 	
 		1.3.1 adapt `docker-compose.yaml` change to folder and enter 
-			  
-```bash		  
-docker-compose up
-```
-			  
-or enter 
-			  
-```bash
-docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
-```
 		1.3.2 When logging in remotely: log into your remote server by `ssh -X`
 
 	2. Download the database for your organism of interest.
