@@ -20,14 +20,14 @@ Also check out the pre-build docker at [dockerhub](https://hub.docker.com/r/bout
 
 Install docker to the point that `docker run hello-world` runs successfully and use `cld` as described below e.g:
 
-1. To use the graphical interface
+1. To use the graphical interface:
 
- 1.1 Mac:
-	  1.1.1 Install xquartz: https://www.xquartz.org/
-	  1.1.2 `open -a XQuartz`
-	  1.1.3 `IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
-	  1.1.4 `xhost + $IP`
-	  1.1.5 adapt `docker-compose.yaml` change to folder and enter
+1.1 Mac:
+1.1.1 Install xquartz: https://www.xquartz.org/
+1.1.2 `open -a XQuartz`
+1.1.3 `IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
+1.1.4 `xhost + $IP`
+1.1.5 adapt `docker-compose.yaml` change to folder and enter
 			  
 ```bash
 docker-compose up
@@ -39,10 +39,10 @@ or enter
 docker run -e DISPLAY=$IP:0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
 ```
 			  
- 1.2 Windows:
-	  1.2.1 Install a command line package manager for windows: https://chocolatey.org/
-	  1.2.2 Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
-	  1.2.3 adapt docker-compose.yaml change to folder and enter 
+1.2 Windows:
+1.2.1 Install a command line package manager for windows: https://chocolatey.org/
+1.2.2 Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
+1.2.3 adapt docker-compose.yaml change to folder and enter 
 			  
 ```bash
 docker-compose up
