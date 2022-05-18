@@ -27,11 +27,14 @@ Install docker to the point that "docker run hello-world" runs successfully and 
 			  1.1.2 open -a XQuartz
 			  1.1.3 IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 			  1.1.4 xhost + $IP
-			  1.1.5 adapt docker-compose.yaml change to folder and enter 
+			  1.1.5 adapt docker-compose.yaml change to folder and enter
+			  
 ```
 docker-compose up
 ```
+
 			  or enter 
+			  
 ```
 docker run -e DISPLAY=$IP:0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
 ```
@@ -46,6 +49,7 @@ docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gu
 			  
 		 1.3 GUIed linux:
 			  1.3.1 adapt docker-compose.yaml change to folder and enter 
+			  
 ```			  
 docker-compose up
 ```
