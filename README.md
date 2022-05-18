@@ -27,15 +27,34 @@ Install docker to the point that "docker run hello-world" runs successfully and 
 			  1.1.2 open -a XQuartz
 			  1.1.3 IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 			  1.1.4 xhost + $IP
-			  1.1.5 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter "docker run -e DISLPAY=$IP:0 -v ~/Desktop:/data boutroslab/cld_docker cld_gui"
+			  1.1.5 adapt docker-compose.yaml change to folder and enter 
+```
+docker-compose up
+```
+			  or enter 
+```
+docker run -e DISPLAY=$IP:0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
+```
 			  
 		 1.2 Windows:
 			  1.2.1 Install a command line package manager for windows: https://chocolatey.org/
 			  1.2.2 Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
-			  1.2.3 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter "docker run -e DISLPAY=<your IP>:0.0 -v ~/Desktop:/data boutroslab/cld_docker cld_gui"
+			  1.2.3 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter 
+```			  
+docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
+```
 			  
 		 1.3 GUIed linux:
-			  1.3.1 adapt docker-compose.yaml change to folder and enter "docker-compose up" or enter "docker run -e DISLPAY=<your IP>:0.0 -v ~/Desktop:/data boutroslab/cld_docker cld_gui"
+			  1.3.1 adapt docker-compose.yaml change to folder and enter 
+```			  
+docker-compose up
+```
+			  
+			  or enter 
+			  
+```
+docker run -e DISLPAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
+```
 			  1.3.2 When logging in remotely: log into your remote server by ssh -X
 			  
 	2. Download the database for your organism of interest.
@@ -48,14 +67,18 @@ Install docker to the point that "docker run hello-world" runs successfully and 
 
 Install docker to the point that docker run hello-world runs successfully and use cld as described below e.g:
 
-docker run -v ~/Desktop:/data boutroslab/cld_docker cld --help
+```
+docker run -v ${PWD}:/data boutroslab/cld_docker cld --help
+```
 
 cld can be called either with “--version”, printing its version number and copyrights, 
 “--help” printing a more elusive help documentation and with “--task”. 
 
 EXAMPLE to execute from the path containing all needed files:
 
-docker run -v ~/Desktop:/data boutroslab/cld_docker cld --task=end_to_end --output-dir=/data --parameter-file=/data/params.txt --gene-list=/data/gene_list.txt		    
+```
+docker run -v ${PWD}:/data boutroslab/cld_docker cld --task=end_to_end --output-dir=/data --parameter-file=/data/params.txt --gene-list=/data/gene_list.txt
+```
 
 cld can run 2 distinct tasks, database creation and 
 library design.
