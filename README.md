@@ -14,7 +14,7 @@
 
 Here we describe CRISPR library designer (CLD), an integrated bioinformatics application for the design of custom single guide RNA (sgRNA) libraries for all organisms with annotated genomes. CLD is suitable for the design of libraries using modified CRISPR enzymes and targeting non-coding regions. To demonstrate its utility, we perform a pooled screen for modulators of the TNF-related apoptosis inducing ligand (TRAIL) pathway using a custom library of 12,471 sgRNAs.
 
-**Quick-Start:**
+### Quick Start:
 
 Also check out the pre-build docker at [dockerhub](https://hub.docker.com/r/boutroslab/cld_docker)
 
