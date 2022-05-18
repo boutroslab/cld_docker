@@ -72,6 +72,11 @@ Install docker to the point that `docker run hello-world` runs successfully and 
 		2. When logging in remotely: log into your remote server by `ssh -X`
 
 2. Download the database for your organism of interest.
+
+```
+docker run -v ${PWD}:/data boutroslab/cld_docker cld --task=make_database --output-dir=/data --organism homo_sapiens
+```
+
 3. Enter its name in the reference organism field on the start page.
 4. Enter a list of gene identifiers in the "Gene List" tab and go to the "Design Parameter" tab to set your parameters.
 5. Go to the "Start Analysis" tab to start sgRNA search.
