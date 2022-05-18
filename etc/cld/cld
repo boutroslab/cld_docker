@@ -33,6 +33,7 @@ use Getopt::Long qw(:config pass_through);
 use File::Grep qw( fgrep fmap fdo );
 use Text::Wrap;
 use Unix::Processors;
+use Term::ProgressBar;
 require Tk;							#loads the Tk library, neccessary for producing a simple Tk GUI
 Tk->import;
 require Tk::PathEntry;					#loads the interactive pathentry widget
@@ -52,6 +53,8 @@ require Tk::NoteBook;
 require Tk::Text::SuperText;
 
 #open(my $debug_log, ">", "debug_log.txt") or die $!;
+
+use Timer::Runtime;
 
 my $procs = new Unix::Processors;
 my $max_parallel= my $parallel_number =$procs->max_online;
@@ -3273,7 +3276,7 @@ sub make_a_crispr_library{
                                                    $id=$1."_".$2."_".$3;
                                                     $seq=$1;
                                                }
-                                                ${ ${ $CRISPR_hash{$seq} } {$id} }{"hits"}.=";;".$line[2]."§§0§§0§§NA§§0§§NA";
+                                                ${ ${ $CRISPR_hash{$seq} } {$id} }{"hits"}.=";;".$line[2]."ï¿½ï¿½0ï¿½ï¿½0ï¿½ï¿½NAï¿½ï¿½0ï¿½ï¿½NA";
                                           }else{
                                             if($line[0] =~m/^(\S+?)_(\d+)_(\d+)$/){
                                                 $id=$1."_".$2."_".$3;
@@ -3336,31 +3339,31 @@ sub make_a_crispr_library{
                                                                               ${ ${ $CRISPR_hash{$seq} } {$id} }{"hits"}.=
                                                                                 ";;".
                                                                                     $namestuff.
-                                                                                    "§§".($line[3]-$startcoordinate).
-                                                                                    "§§".($line[3]+@matchstringo-$startcoordinate).
-                                                                                    "§§".join("",@matchstringo).
-                                                                                    "§§".$edit_distance.
-                                                                                    "§§".$direction.
-                                                                                    "§§".$line[2];
+                                                                                    "ï¿½ï¿½".($line[3]-$startcoordinate).
+                                                                                    "ï¿½ï¿½".($line[3]+@matchstringo-$startcoordinate).
+                                                                                    "ï¿½ï¿½".join("",@matchstringo).
+                                                                                    "ï¿½ï¿½".$edit_distance.
+                                                                                    "ï¿½ï¿½".$direction.
+                                                                                    "ï¿½ï¿½".$line[2];
                                                                     }elsif($namestuff eq "" && $something{"ignore_intergenic"} eq 0){
                                                                               ${ ${ $CRISPR_hash{$seq} } {$id} }{"hits"}.=
                                                                                 ";;".$line[2].
-                                                                                    "§§".($line[3]-$startcoordinate).
-                                                                                    "§§".($line[3]+@matchstringo-$startcoordinate).
-                                                                                    "§§".join("",@matchstringo).
-                                                                                    "§§".$edit_distance.
-                                                                                    "§§".$direction.
-                                                                                    "§§".$line[2];
+                                                                                    "ï¿½ï¿½".($line[3]-$startcoordinate).
+                                                                                    "ï¿½ï¿½".($line[3]+@matchstringo-$startcoordinate).
+                                                                                    "ï¿½ï¿½".join("",@matchstringo).
+                                                                                    "ï¿½ï¿½".$edit_distance.
+                                                                                    "ï¿½ï¿½".$direction.
+                                                                                    "ï¿½ï¿½".$line[2];
                                                                     }
                                                                 }else{
                                                                         ${ ${ $CRISPR_hash{$seq} } {$id} }{"hits"}.=
                                                                                 ";;".$line[2].
-                                                                                    "§§".($line[3]).
-                                                                                    "§§".($line[3]+@matchstringo).
-                                                                                    "§§".join("",@matchstringo).
-                                                                                    "§§".$edit_distance.
-                                                                                    "§§".$direction.
-                                                                                    "§§".$line[2];
+                                                                                    "ï¿½ï¿½".($line[3]).
+                                                                                    "ï¿½ï¿½".($line[3]+@matchstringo).
+                                                                                    "ï¿½ï¿½".join("",@matchstringo).
+                                                                                    "ï¿½ï¿½".$edit_distance.
+                                                                                    "ï¿½ï¿½".$direction.
+                                                                                    "ï¿½ï¿½".$line[2];
                                                                 }
                                                             }
                                                       }    
@@ -3471,23 +3474,23 @@ sub make_a_crispr_library{
 																					  ${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"}.=
                                                                                       ";;".
                                                                                         $namestuff.
-                                                                                        "§§".($line[3]-$startcoordinate).
-                                                                                        "§§".($line[3]+@matchstringo-$startcoordinate).
-                                                                                        "§§".join("",@matchstringo).
-                                                                                        "§§".$edit_distance.
-                                                                                        "§§".$direction.
-                                                                                        "§§".$spacer.
-                                                                                        "§§".$line[2];
+                                                                                        "ï¿½ï¿½".($line[3]-$startcoordinate).
+                                                                                        "ï¿½ï¿½".($line[3]+@matchstringo-$startcoordinate).
+                                                                                        "ï¿½ï¿½".join("",@matchstringo).
+                                                                                        "ï¿½ï¿½".$edit_distance.
+                                                                                        "ï¿½ï¿½".$direction.
+                                                                                        "ï¿½ï¿½".$spacer.
+                                                                                        "ï¿½ï¿½".$line[2];
 																				}elsif($namestuff eq "" && $something{"ignore_intergenic"}==0){
 																					  ${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"}.=
                                                                                       ";;".$line[2].
-                                                                                        "§§".($line[3]-$startcoordinate).
-                                                                                        "§§".($line[3]+@matchstringo-$startcoordinate).
-                                                                                        "§§".join("",@matchstringo).
-                                                                                        "§§".$edit_distance.
-                                                                                        "§§".$direction.
-                                                                                        "§§".$spacer.
-                                                                                        "§§".$line[2];
+                                                                                        "ï¿½ï¿½".($line[3]-$startcoordinate).
+                                                                                        "ï¿½ï¿½".($line[3]+@matchstringo-$startcoordinate).
+                                                                                        "ï¿½ï¿½".join("",@matchstringo).
+                                                                                        "ï¿½ï¿½".$edit_distance.
+                                                                                        "ï¿½ï¿½".$direction.
+                                                                                        "ï¿½ï¿½".$spacer.
+                                                                                        "ï¿½ï¿½".$line[2];
 																				}
                                                                               $was_hit=1;
                                                                         }
@@ -3501,9 +3504,9 @@ sub make_a_crispr_library{
                                                                               && ($edit_distance <= $something{"edit_distance_allowed"})
                                                                         ) {
                                                                                     my @hitarray=split(";;",${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"});
-                                                                                    my @lasthitarray=split("§§",$hitarray[-1]);
+                                                                                    my @lasthitarray=split("ï¿½ï¿½",$hitarray[-1]);
                                                                                     $lasthitarray[3].="-".join("",@matchstringo);
-                                                                                    $hitarray[-1]=join("§§",@lasthitarray);
+                                                                                    $hitarray[-1]=join("ï¿½ï¿½",@lasthitarray);
                                                                                     ${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"}=join(";;",@hitarray);
                                                                         }else{
                                                                                     my @hitarray=split(";;",${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"});
@@ -3515,24 +3518,24 @@ sub make_a_crispr_library{
                                                             }                                                  
                                                       }else{
                                                             if ($line[1]<147) {
-                                                                  ${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"}.=";;".$line[2]."§§".($line[3]-$startcoordinate)."§§".($line[3]+@matchstringo-$startcoordinate)."§§".join("",@matchstringo)."§§".$edit_distance."§§".$direction."§§".$spacer;
+                                                                  ${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"}.=";;".$line[2]."ï¿½ï¿½".($line[3]-$startcoordinate)."ï¿½ï¿½".($line[3]+@matchstringo-$startcoordinate)."ï¿½ï¿½".join("",@matchstringo)."ï¿½ï¿½".$edit_distance."ï¿½ï¿½".$direction."ï¿½ï¿½".$spacer;
                                                             }elsif($line[1]==147){
                                                                   my @hitarray=split(";;",${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"});
-                                                                  my @lasthitarray=split("§§",$hitarray[-1]);
+                                                                  my @lasthitarray=split("ï¿½ï¿½",$hitarray[-1]);
                                                                   $lasthitarray[3].="-".join("",@matchstringo);
-                                                                  $hitarray[-1]=join("§§",@lasthitarray);
+                                                                  $hitarray[-1]=join("ï¿½ï¿½",@lasthitarray);
                                                                   ${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"}=join(";;",@hitarray);
                                                             }else{
                                                                   ${ ${ $CRISPR_hash{$seq} } {$line[0]} }{"hits"}.=
                                                                     ";;".
                                                                         $line[2].
-                                                                        "§§".($line[3]-$startcoordinate).
-                                                                        "§§".($line[3]+@matchstringo-$startcoordinate).
-                                                                        "§§".join("",@matchstringo).
-                                                                        "§§".$edit_distance.
-                                                                        "§§".$direction.
-                                                                        "§§".$spacer.
-                                                                        "§§".$line[2];
+                                                                        "ï¿½ï¿½".($line[3]-$startcoordinate).
+                                                                        "ï¿½ï¿½".($line[3]+@matchstringo-$startcoordinate).
+                                                                        "ï¿½ï¿½".join("",@matchstringo).
+                                                                        "ï¿½ï¿½".$edit_distance.
+                                                                        "ï¿½ï¿½".$direction.
+                                                                        "ï¿½ï¿½".$spacer.
+                                                                        "ï¿½ï¿½".$line[2];
                                                             }
                                                             $was_hit=1;
                                                       }
@@ -3672,7 +3675,7 @@ sub make_a_crispr_library{
                               foreach my $hit (@targets){
                                     if ($hit ne "") {
                                           #print $hit."\n";
-                                          my @splithit=split("§§",$hit);
+                                          my @splithit=split("ï¿½ï¿½",$hit);
                                           if (${ ${ $CRISPR_hash{$fname} } {$key} }{"score"}-((20-(100/${ ${ $CRISPR_hash{$fname} } {$key} }{"length"}*$splithit[4])))>0) {
                                                 ${ ${ $CRISPR_hash{$fname} } {$key} }{"score"}=${ ${ $CRISPR_hash{$fname} } {$key} }{"score"}-((20-(100/${ ${ $CRISPR_hash{$fname} } {$key} }{"length"}*$splithit[4])));
                                           }else{
@@ -3714,7 +3717,7 @@ sub make_a_crispr_library{
 													if ($hit ne "") {
 														  #print the candidates name
 														  print $outfiletab "$key\t";
-														  my @splithit = split("§§",$hit);
+														  my @splithit = split("ï¿½ï¿½",$hit);
 														  #print its length on this whole sequence these are genomic coordinates
 														  if ( exists ${ ${ $CRISPR_hash{$fname} } {$key} }{"length"} ) {
 																print $outfiletab ${ ${ $CRISPR_hash{$fname} } {$key} }{"length"} . "\t";
@@ -3872,7 +3875,7 @@ sub make_a_crispr_library{
 													if ($hit ne "") {
 														  #print the candidates name
 														  print $outfiletab "$key\t";
-														  my @splithit = split("§§",$hit);
+														  my @splithit = split("ï¿½ï¿½",$hit);
 														  #print its length on this whole sequence these are genomic coordinates
 														  if ( exists ${ ${ $CRISPR_hash{$fname} } {$key} }{"length"} ) {
 																print $outfiletab ${ ${ $CRISPR_hash{$fname} } {$key} }{"length"} . "\t";
@@ -4514,6 +4517,7 @@ sub make_database{
 			rsync -av --progress --exclude "*primary_assembly*" --exclude "*dna_rm*" --exclude "*dna.chromosome*" --exclude "*dna_sm*" '.$_[1].'fasta/'.$_[0].'/dna/ .;
 		');
 	    print "All files were dowloaded\n";
+	    print "Processing downloaded files. This will take A LOT of time.\n";
         if (defined $something{"GUI"}) {$mw->update;};
 			system('for f in *.gz ; do gunzip $f; done ;');
 			system('for f in *.gtf ; do cat $f > '.$_[0].'.new.gta ; done ;');
@@ -4648,6 +4652,7 @@ sub wrap_sequences{
 	$Text::Wrap::columns = 61;
 	my $db_file_name=$_[0];
 	
+	print "wrap sequences\n";
 	open my ($file_to_wrap),$db_file_name ;
 	open my $out_file , ">temp" ;
 	while (<$file_to_wrap>) {
@@ -4660,6 +4665,7 @@ sub wrap_sequences{
 	close $file_to_wrap;
 	close $out_file;
 	rename("temp",$db_file_name);
+	print "wrap sequences END\n";
 }
 
 sub build_tree_new{
@@ -4745,7 +4751,12 @@ sub cpg_for_all{
         my $pm = Parallel::ForkManager->new($max_parallel);
         my $db       = Bio::DB::Fasta->new($_[0]);
 		my @ids      = $db->get_all_primary_ids;
+		
+		my $progress_bar = Term::ProgressBar->new(@ids);
+		
+		print "cpg_for_all\n";
         foreach my $id (@ids){
+        	    $progress_bar->update($id);
                 my $pid = $pm->start and next;				
 					my $seq=$db->seq($id);
 					open(my $temp, ">", $id.".fasta") or die $!;
@@ -4755,6 +4766,7 @@ sub cpg_for_all{
                 $pm->finish;             
         }
         $pm->wait_all_children;
+        print "cpg for all END \n";
 }
 
 sub include_cpg{
@@ -5190,7 +5202,7 @@ sub   rev_com_IUPAC {
 
 #########################################################################################
 #name:      calc_doench_score
-#function:  Calculate CRISPR Score after Doench et al. 2014 Rational design of highly active sgRNAs for CRISPR-Cas9Ðmediated gene inactivation
+#function:  Calculate CRISPR Score after Doench et al. 2014 Rational design of highly active sgRNAs for CRISPR-Cas9ï¿½mediated gene inactivation
 #input:     < string > #lengt 30 mandatory
 #output:    <numeric double>
 #########################################################################################
