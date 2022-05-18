@@ -24,7 +24,7 @@ Install docker to the point that `docker run hello-world` runs successfully and 
 
 	1. Mac:
 
-		1 Install xquartz: https://www.xquartz.org/
+		1. Install xquartz: https://www.xquartz.org/
 		2. `open -a XQuartz`
 		3. `IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')`
 		4. `xhost + $IP`
