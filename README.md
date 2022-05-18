@@ -22,7 +22,7 @@ Install docker to the point that `docker run hello-world` runs successfully and 
 
 1. To use the graphical interface:
 
-	1 Mac:
+	1. Mac:
 
 		1 Install xquartz: https://www.xquartz.org/
 		2. `open -a XQuartz`
