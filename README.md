@@ -60,15 +60,15 @@ Install docker to the point that `docker run hello-world` runs successfully and 
 	
 		1. adapt `docker-compose.yaml` change to folder and enter 
 			  
-```bash		  
-docker-compose up
-```
-			  
-or enter 
-			  
-```bash
-docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
-```
+		```bash		  
+		docker-compose up
+		```
+
+		or enter 
+
+		```bash
+		docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
+		```
 		2. When logging in remotely: log into your remote server by `ssh -X`
 
 2. Download the database for your organism of interest.
