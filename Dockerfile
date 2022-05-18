@@ -12,7 +12,7 @@ RUN apt-get update \
     perl-doc \ 
     perl-modules \
     perl-tk \
-    python \
+    python3 \
     ncbi-blast+ \
     libcgi-fast-perl \
     libperl-dev \
@@ -51,6 +51,7 @@ RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::DB::Fasta")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::SeqIO")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::Tools::GFF")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Scalar::Util")'
+RUN perl -MCPAN -e 'CPAN::Shell->install("Term::ProgressBar")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::SeqFeature::Generic")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::Location::Split")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::Graphics")'
@@ -88,9 +89,10 @@ RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::Checkbutton")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::MainWindow")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::NoteBook")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::Text::SuperText")'
+RUN perl -MCPAN -e 'CPAN::Shell->install("Timer::Runtime")'
 
-ENV BOWTIE2_VERSION 2.2.8
-ENV BOWTIE_VERSION 1.2.2
+ENV BOWTIE2_VERSION 2.4.5
+ENV BOWTIE_VERSION 1.3.1
 
 RUN wget https://downloads.sourceforge.net/project/bowtie-bio/bowtie2/$BOWTIE2_VERSION/bowtie2-$BOWTIE2_VERSION-linux-x86_64.zip \
     && unzip -d /usr/bin bowtie2-$BOWTIE2_VERSION-linux-x86_64.zip
@@ -99,8 +101,8 @@ RUN wget https://downloads.sourceforge.net/project/bowtie-bio/bowtie2/$BOWTIE2_V
 RUN wget https://downloads.sourceforge.net/project/bowtie-bio/bowtie/$BOWTIE_VERSION/bowtie-$BOWTIE_VERSION-linux-x86_64.zip \
     && unzip -d /usr/bin bowtie-$BOWTIE_VERSION-linux-x86_64.zip \
     && chmod -R a+rwx /usr/bin/bowtie* \
-    && mv /usr/bin/bowtie2-2.2.8/* /usr/bin/ \
-    && mv /usr/bin/bowtie-*/bowtie* /usr/bin/
+    && mv /usr/bin/bowtie2*/* /usr/bin/ \
+    && mv /usr/bin/bowtie*/bowtie* /usr/bin/
 
 COPY etc/cld /var/www/cld 
 
