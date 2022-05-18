@@ -117,22 +117,22 @@ and then
 ```bash
 cld  --task=library_assembly
 ```
-	if the user wants 
- 	to separate the two steps for example in order to only identify target sites without 
- 	compiling a clonable library. 
- 	Else 
+if the user wants 
+to separate the two steps for example in order to only identify target sites without 
+compiling a clonable library. 
+Else 
 	
 ```bash
 cld  --task=end_to_end
 ```
 
-	which automatically will perform the steps mentioned before 
- 	and present the end-result in a user defined output folder. 
- 	For reasons of manageability for high throughput design, output files are kept 
- 	as simple and standardised as possible. However a genome wide library targeting 
- 	the human genome quickly spans several GB depending on how strict the parameters 
- 	are chosen. Since the end_to_end task takes most time we benchmarked its time 
- 	consumption to be approximately 1 h wall-time for an 8-core cpu node.
+which automatically will perform the steps mentioned before 
+and present the end-result in a user defined output folder. 
+For reasons of manageability for high throughput design, output files are kept 
+as simple and standardised as possible. However a genome wide library targeting 
+the human genome quickly spans several GB depending on how strict the parameters 
+are chosen. Since the end_to_end task takes most time we benchmarked its time 
+consumption to be approximately 1 h wall-time for an 8-core cpu node.
 
  	
 For running cld from the command line the syntax as outlined in the [MANUAL](https://github.com/boutroslab/cld/blob/master/MANUAL.md) must be used.
