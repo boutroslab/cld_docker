@@ -41,9 +41,10 @@ docker run -e DISPLAY=$IP:0 -v ${PWD}:/data boutroslab/cld_docker cld_gui
 ```
 			  
 	1.2 Windows:
-		* Install a command line package manager for windows: https://chocolatey.org/
-		* Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
-		* adapt `docker-compose.yaml` change to folder and enter 
+	
+	* Install a command line package manager for windows: https://chocolatey.org/
+	* Follow this guide to install the graphical interface manager for windows: https://dev.to/darksmile92/run-gui-app-in-linux-docker-container-on-windows-host-4kde
+	* adapt `docker-compose.yaml` change to folder and enter 
 
 ```bash
 docker-compose up
@@ -56,6 +57,7 @@ docker run -e DISPLAY=<your IP>:0.0 -v ${PWD}:/data boutroslab/cld_docker cld_gu
 ```
 			  
 	1.3 GUIed linux:
+	
 		1.3.1 adapt `docker-compose.yaml` change to folder and enter 
 			  
 ```bash		  
