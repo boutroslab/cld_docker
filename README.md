@@ -4,7 +4,7 @@
 
 [![DOI](https://zenodo.org/badge/20669/fheigwer/cld.svg)](https://zenodo.org/badge/latestdoi/20669/fheigwer/cld)
 
-#CRISPR Library Designer (CLD): a software for the multispecies design of sgRNA libraries
+# CRISPR Library Designer (CLD): a software for the multispecies design of sgRNA libraries
 
 CITATION
 
