@@ -4506,9 +4506,9 @@ sub make_database{
 		system('rsync '.$_[1].'fasta/'.$_[0].'/dna/ > temp.log;');
 		# Void context
 		if ( fgrep { /README/ } "temp.log" ) {
-			print "rsync could connect\nand your files are downloaded";
+			print "Step 1 of 7: SUCCESS! rsync could connect\nThe files for ".$_[0]." will be downloaded.\n";
 		}else{
-			die "\n\nThere was some problem with the rsync connection to ensembl.\nMaybe you have a typo in the server address or some proxy is hindering the access.\n"
+			die "\n\nERROR: There was some problem with the rsync connection to ensembl.\nMaybe you have a typo in the server address or some proxy is hindering the access.\n"
 		}
 		#unlink('temp.log');
 	    system('
@@ -4517,27 +4517,43 @@ sub make_database{
 			rsync -av --progress --exclude "*primary_assembly*" --exclude "*dna_rm*" --exclude "*dna.chromosome*" --exclude "*dna_sm*" '.$_[1].'fasta/'.$_[0].'/dna/ .;
 		');
 	    print "All files were dowloaded\n";
-	    print "Processing downloaded files. This will take A LOT of time.\n";
+	    print "Step 2 of 7: Processing downloaded files...\n";
         if (defined $something{"GUI"}) {$mw->update;};
-			system('for f in *.gz ; do gunzip $f; done ;');
-			system('for f in *.gtf ; do cat $f > '.$_[0].'.new.gta ; done ;');
-			system('for f in *.cdna.all.fa  ; do cat $f > '.$_[0].'.cdna.all.new.fu ; done ;');	    
-			system('for f in *.dna.toplevel.fa ; do cat $f > '.$_[0].'.dna.toplevel.new.fu ; done ;');
-			system('for f in *.gtf ; do rm $f;  done ;');
-			system('for f in *.cdna.all.fa ; do rm $f;  done ;');
-			system('for f in *.dna.toplevel.fa ; do rm $f ; done ;');
-			system('for f in *.new.gta ; do cat $f > '.$_[0].'.gtf ; done ;');
-			system('for f in *.cdna.all.new.fu ; do cat $f > '.$_[0].'.cdna.all.fa ; done ;');
-			system('for f in *.dna.toplevel.new.fu; do cat $f > '.$_[0].'.dna.toplevel.fa ; done ;');
-			system('for f in *.gta ; do rm $f ; done ;');
-			system('for f in *.cdna.all.new.fu ; do rm $f ; done ;');
-			system('for f in *.dna.toplevel.new.fu ; do rm $f ; done ;');
-			print "All files were unzipped\n";
+            print "Unzipping and creating some files...\n";
+			system('for f in *.gz ; do gunzip $f; done | pv ;');
+			print "Processing GTF files ...\n";
+			system('for f in *.gtf ; do cat $f > '.$_[0].'.new.gta ; done | pv ;');
+			print "Processing CDNA fa files ...\n";
+			system('for f in *.cdna.all.fa  ; do cat $f > '.$_[0].'.cdna.all.new.fu ; done | pv ;');	    
+			print "Processing DNA toplevel fa files ...\n";
+			system('for f in *.dna.toplevel.fa ; do cat $f > '.$_[0].'.dna.toplevel.new.fu ; done | pv ;');
+			print "Removing GTF files ...\n";
+			system('for f in *.gtf ; do rm $f;  done | pv ;');
+			print "Removing CDNA ALL fa files ...\n";
+			system('for f in *.cdna.all.fa ; do rm $f;  done | pv ;');
+			print "Removing CDNA toplevel fa files ...\n";
+			system('for f in *.dna.toplevel.fa ; do rm $f ; done | pv ;');
+			print "Processing GTA files ...\n";
+			system('for f in *.new.gta ; do cat $f > '.$_[0].'.gtf ; done | pv ;');
+			print "Processing CDNA all new fu files ...\n";
+			system('for f in *.cdna.all.new.fu ; do cat $f > '.$_[0].'.cdna.all.fa ; done | pv ;');
+			print "Processing DNA toplevel new fu files ...\n";
+			system('for f in *.dna.toplevel.new.fu; do cat $f > '.$_[0].'.dna.toplevel.fa ; done | pv ;');
+			print "Removing GTA files ...";
+			system('for f in *.gta ; do rm $f ; done | pv ;');
+			print "Removing CDNA ALL new fu files ...\n";
+			system('for f in *.cdna.all.new.fu ; do rm $f ; done | pv ;');
+			print "Removing DNA toplevel new fu files ...\n";
+			system('for f in *.dna.toplevel.new.fu ; do rm $f ; done | pv ;');
+			print "All files were unzipped and processed\n";
             if (defined $something{"GUI"}) {$mw->update;};
+            print "Step 3 of 7: CREATE MYGFF\n";
 			create_mygff($_[0].'.dna.toplevel.fa',$_[0].'.gtf',$_[0].'.all.dna.fa');
 			print "All files were converted to gff\n";
             if (defined $something{"GUI"}) {$mw->update;};
+            print "Step 4 of 7: Wrap sequences\n";
 			wrap_sequences($_[0].'.cdna.all.fa');
+			print "Step 5 of 7: CPG for all\n";
 			cpg_for_all($_[0].'.dna.toplevel.fa'); #store CpG-island information in csv-files
 			system('for f in *.fasta ; do rm $f ;done ;');
 			print "The entire genome was checked for CPG islands\n";
@@ -4548,6 +4564,7 @@ sub make_database{
 			system('rm \#*');
 			system('rm *README*');
 			system('rm *CHECKSUMS*');
+			print "Step 6 of 7: Correct cDNA\n";
 			correct_cdna($_[0].".cdna.all.fa"); #change header of [organsim].cdna.all.fa in [organsim].cdna.all.facorrected.fa
 			system('for f in *.cdna.all.fa ; do rm $f ;done ;');
 			print "CDNA files were corrected\n";
@@ -4559,7 +4576,8 @@ sub make_database{
 			include_cpg("."); #add CpG-island information to mygff-files
 			system('for f in *.csv ; do rm $f ;done ;');
 			system('for f in *.gtf ; do rm $f ;done ;');
-			print "All prerequisites for building alignment indeces were built correctly.\nNow Bowtie indeces will be build, depending on the size of the target genome, this can take a while.\n";
+			print "All prerequisites for building alignment indeces were built correctly.\nNow Bowtie indicies will be build, depending on the size of the target genome, this can take a while.\n";
+			print "Step 7 of 7: Bowtie indicies\n";
 			if (defined $something{"GUI"}) {$mw->update;};
             if(can_run('bowtie2-build')){system("bowtie2-build ".$_[0].".cdna.all.fa ".$_[0].".cdna & bowtie2-build ".$_[0].".all.dna.fa ".$_[0].".dna & bowtie2-build ".$_[0].".dna.toplevel.fa ".$_[0].".genome;");} #create files with bowtie2-indices
 			if(can_run('bowtie-build')){system("bowtie-build ".$_[0].".cdna.all.fa ".$_[0].".cdna & bowtie-build ".$_[0].".all.dna.fa ".$_[0].".dna & bowtie-build ".$_[0].".dna.toplevel.fa ".$_[0].".genome;"); }#create files with bowtie-indices
@@ -4589,7 +4607,8 @@ sub make_database{
 }
 sub create_mygff{
 	print "creating Fasta Database....";
-      my $db       = Bio::DB::Fasta->new($_[0]);
+      my $db       = Bio::DB::Fasta->new(-filename => $_[0],
+                                         -write_flag => 1);
 	  print "done\n";
       my @line;
       my $seqstr  ;
@@ -4604,7 +4623,9 @@ sub create_mygff{
 	  my $curr_chrom;
       open(my $in_gtf,"<", $_[1]) or die $!;
       open($chrom_file_fasta, ">",$_[2]) or die $!;
+      print "Working on $chrom_file_fasta";
       while (<$in_gtf>) {
+      	print ".";
        if($_!~/^\#/){
          @line=split("\t",$_);
          if ($line[0] ne $curr_chrom) {    
@@ -4656,6 +4677,7 @@ sub wrap_sequences{
 	open my ($file_to_wrap),$db_file_name ;
 	open my $out_file , ">temp" ;
 	while (<$file_to_wrap>) {
+		print ".";
 		if ($_!~m/>/){
 			print $out_file wrap('', '', $_);
 		}else{
@@ -4665,7 +4687,7 @@ sub wrap_sequences{
 	close $file_to_wrap;
 	close $out_file;
 	rename("temp",$db_file_name);
-	print "wrap sequences END\n";
+	print "Finished wrap sequences\n";
 }
 
 sub build_tree_new{
@@ -4752,11 +4774,12 @@ sub cpg_for_all{
         my $db       = Bio::DB::Fasta->new($_[0]);
 		my @ids      = $db->get_all_primary_ids;
 		
-		my $progress_bar = Term::ProgressBar->new(@ids);
+		my $progress_bar = Term::ProgressBar->new(scalar(@ids));
+		my $index = 0;
 		
 		print "cpg_for_all\n";
         foreach my $id (@ids){
-        	    $progress_bar->update($id);
+        	    $progress_bar->update($index++);
                 my $pid = $pm->start and next;				
 					my $seq=$db->seq($id);
 					open(my $temp, ">", $id.".fasta") or die $!;

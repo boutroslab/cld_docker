@@ -6,40 +6,44 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
 	&& apt-get install -y \
-    unzip \
+    curl \
+    expat \
+    gcc \
+    git \
+    graphviz-dev \
+    g++ \
+    libcgi-fast-perl \
+    libdb-dev \
+    libgd-dev \
+    libperl-dev \
+    libxml2-dev \
+    libxt-dev \
+    make \ 
+    ncbi-blast+ \
+    openbox \
     perl \
     perl-debug \ 
     perl-doc \ 
     perl-modules \
     perl-tk \
+    pv \
     python3 \
-    ncbi-blast+ \
-    libcgi-fast-perl \
-    libperl-dev \
-    wget \
     rsync \
-    curl \
-    gcc g++ make \ 
-    expat \
-    zlib1g-dev \
-    libxt-dev \
-    libxml2-dev \
-    libgd-dev \
-    graphviz-dev \
     sudo \
-    git \
-	gnupg \	
-	libglapi-mesa \
-	libosmesa6 \
-	ca-certificates \
-	ffmpeg \
-	hicolor-icon-theme \
-	libtbb-dev \
-    libdb-dev \
-    xserver-xorg \
+    wget \
+    xauth \
     xorg \
-    openbox \
-    xauth 
+    xserver-xorg \
+    zlib1g-dev \
+    ca-certificates \
+    ffmpeg \
+    gnupg \
+    hicolor-icon-theme \
+    libglapi-mesa \
+    libosmesa6 \
+    libtbb-dev \
+    unzip
+
     
 ENV PERL_MM_USE_DEFAULT=1
 
