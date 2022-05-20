@@ -4547,7 +4547,7 @@ sub make_database{
 			system('for f in *.dna.toplevel.new.fu ; do rm $f ; done | pv ;');
 			print "All files were unzipped and processed\n";
             if (defined $something{"GUI"}) {$mw->update;};
-            print "Step 3 of 7: CREATE MYGFF\n";
+            print "Step 3 of 7: Create MYGFF\n";
 			create_mygff($_[0].'.dna.toplevel.fa',$_[0].'.gtf',$_[0].'.all.dna.fa');
 			print "All files were converted to gff\n";
             if (defined $something{"GUI"}) {$mw->update;};
@@ -4621,20 +4621,36 @@ sub create_mygff{
       my $temp;
 	  my $curr_chrom;
 	  my $index = 0;
+	  my $spin_index = 0;
 	  
       open(my $in_gtf,"<", $_[1]) or die $!;
       open($chrom_file_fasta, ">",$_[2]) or die $!;
       print "Working on $chrom_file_fasta";
       while (<$in_gtf>) {
       	
-      	# Print progress every 1000 iterations
-      	if ($index > 1000){
-			print ".";
+      	# print progress every 500 iterations
+		if ($index > 500){
 			$index = 0;
+			if ($spin_index == 0) {
+				print "\r-";
+				$spin_index++;
+			} elsif ($spin_index == 1) {
+				print "\r\\";
+				$spin_index++;
+			} elsif ($spin_index == 2) {
+				print "\r|";
+				$spin_index++;
+			} else {
+				
+				print "\r/";
+				$spin_index = 0;
+			}
+				
 		}
 		else{
 			$index++;
 		}
+		
        if($_!~/^\#/){
          @line=split("\t",$_);
          if ($line[0] ne $curr_chrom) {    
@@ -4682,6 +4698,7 @@ sub wrap_sequences{
 	$Text::Wrap::columns = 61;
 	my $db_file_name=$_[0];
 	my $index=0;
+	my $spinindex=0;
 	
 	print "Wrap sequences\n";
 	
@@ -4689,10 +4706,24 @@ sub wrap_sequences{
 	open my $out_file , ">temp" ;
 	while (<$file_to_wrap>) {
 		
-		# print progress every 1000 iterations
-		if ($index > 1000){
-			print ".";
+		# print progress every 500 iterations
+		if ($index > 500){
 			$index = 0;
+			if ($spin_index == 0) {
+				print "\r-";
+				$spin_index++;
+			} elsif ($spin_index == 1) {
+				print "\r\\";
+				$spin_index++;
+			} elsif ($spin_index == 2) {
+				print "\r|";
+				$spin_index++;
+			} else {
+				
+				print "\r/";
+				$spin_index = 0;
+			}
+				
 		}
 		else{
 			$index++;
@@ -4797,7 +4828,7 @@ sub cpg_for_all{
 		my $progress_bar = Term::ProgressBar->new(scalar(@ids));
 		my $index = 0;
 		
-		print "cpg_for_all\n";
+		print "Running cpg_for_all\n";
         foreach my $id (@ids){
         	    $progress_bar->update($index++);
                 my $pid = $pm->start and next;				
@@ -4809,7 +4840,7 @@ sub cpg_for_all{
                 $pm->finish;             
         }
         $pm->wait_all_children;
-        print "cpg for all END \n";
+        print "Finished cpg for all\n";
 }
 
 sub include_cpg{
