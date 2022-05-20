@@ -4506,9 +4506,9 @@ sub make_database{
 		system('rsync '.$_[1].'fasta/'.$_[0].'/dna/ > temp.log;');
 		# Void context
 		if ( fgrep { /README/ } "temp.log" ) {
-			print "Step 1 of 7: SUCCESS! rsync could connect\nThe files for ".$_[0]." will be downloaded.\n";
+			print "Step 1 of 7: SUCCESS! rsync could connect\nThe files for '".$_[0]."' will be downloaded.\n";
 		}else{
-			die "\n\nERROR: There was some problem with the rsync connection to ensembl.\nMaybe you have a typo in the server address or some proxy is hindering the access.\n"
+			die "\n\nERROR: There was some problem with the rsync connection to ensembl".$_[1]."\nMaybe you have a typo in the server address or some proxy is hindering the access.\n"
 		}
 		#unlink('temp.log');
 	    system('
@@ -4539,7 +4539,7 @@ sub make_database{
 			system('for f in *.cdna.all.new.fu ; do cat $f > '.$_[0].'.cdna.all.fa ; done | pv ;');
 			print "Processing DNA toplevel new fu files ...\n";
 			system('for f in *.dna.toplevel.new.fu; do cat $f > '.$_[0].'.dna.toplevel.fa ; done | pv ;');
-			print "Removing GTA files ...";
+			print "Removing GTA files ...\n";
 			system('for f in *.gta ; do rm $f ; done | pv ;');
 			print "Removing CDNA ALL new fu files ...\n";
 			system('for f in *.cdna.all.new.fu ; do rm $f ; done | pv ;');
@@ -4607,8 +4607,7 @@ sub make_database{
 }
 sub create_mygff{
 	print "creating Fasta Database....";
-      my $db       = Bio::DB::Fasta->new(-filename => $_[0],
-                                         -write_flag => 1);
+      my $db       = Bio::DB::Fasta->new($_[0]);
 	  print "done\n";
       my @line;
       my $seqstr  ;
