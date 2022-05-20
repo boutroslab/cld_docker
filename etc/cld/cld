@@ -4620,11 +4620,21 @@ sub create_mygff{
       my $chrom_file_gff;
       my $temp;
 	  my $curr_chrom;
+	  my $index = 0;
+	  
       open(my $in_gtf,"<", $_[1]) or die $!;
       open($chrom_file_fasta, ">",$_[2]) or die $!;
       print "Working on $chrom_file_fasta";
       while (<$in_gtf>) {
-      	print ".";
+      	
+      	# Print progress every 1000 iterations
+      	if ($index > 1000){
+			print ".";
+			$index = 0;
+		}
+		else{
+			$index++;
+		}
        if($_!~/^\#/){
          @line=split("\t",$_);
          if ($line[0] ne $curr_chrom) {    
@@ -4671,12 +4681,23 @@ sub create_mygff{
 sub wrap_sequences{
 	$Text::Wrap::columns = 61;
 	my $db_file_name=$_[0];
+	my $index=0;
 	
-	print "wrap sequences\n";
+	print "Wrap sequences\n";
+	
 	open my ($file_to_wrap),$db_file_name ;
 	open my $out_file , ">temp" ;
 	while (<$file_to_wrap>) {
-		print ".";
+		
+		# print progress every 1000 iterations
+		if ($index > 1000){
+			print ".";
+			$index = 0;
+		}
+		else{
+			$index++;
+		}
+			
 		if ($_!~m/>/){
 			print $out_file wrap('', '', $_);
 		}else{
