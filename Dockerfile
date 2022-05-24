@@ -6,40 +6,44 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
 	&& apt-get install -y \
-    unzip \
+    curl \
+    expat \
+    gcc \
+    git \
+    graphviz-dev \
+    g++ \
+    libcgi-fast-perl \
+    libdb-dev \
+    libgd-dev \
+    libperl-dev \
+    libxml2-dev \
+    libxt-dev \
+    make \ 
+    ncbi-blast+ \
+    openbox \
     perl \
     perl-debug \ 
     perl-doc \ 
     perl-modules \
     perl-tk \
-    python \
-    ncbi-blast+ \
-    libcgi-fast-perl \
-    libperl-dev \
-    wget \
+    pv \
+    python3 \
     rsync \
-    curl \
-    gcc g++ make \ 
-    expat \
-    zlib1g-dev \
-    libxt-dev \
-    libxml2-dev \
-    libgd-dev \
-    graphviz-dev \
     sudo \
-    git \
-	gnupg \	
-	libglapi-mesa \
-	libosmesa6 \
-	ca-certificates \
-	ffmpeg \
-	hicolor-icon-theme \
-	libtbb-dev \
-    libdb-dev \
-    xserver-xorg \
+    wget \
+    xauth \
     xorg \
-    openbox \
-    xauth 
+    xserver-xorg \
+    zlib1g-dev \
+    ca-certificates \
+    ffmpeg \
+    gnupg \
+    hicolor-icon-theme \
+    libglapi-mesa \
+    libosmesa6 \
+    libtbb-dev \
+    unzip
+
     
 ENV PERL_MM_USE_DEFAULT=1
 
@@ -51,6 +55,7 @@ RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::DB::Fasta")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::SeqIO")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::Tools::GFF")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Scalar::Util")'
+RUN perl -MCPAN -e 'CPAN::Shell->install("Term::ProgressBar")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::SeqFeature::Generic")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::Location::Split")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Bio::Graphics")'
@@ -88,9 +93,10 @@ RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::Checkbutton")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::MainWindow")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::NoteBook")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::Text::SuperText")'
+RUN perl -MCPAN -e 'CPAN::Shell->install("Timer::Runtime")'
 
-ENV BOWTIE2_VERSION 2.2.8
-ENV BOWTIE_VERSION 1.2.2
+ENV BOWTIE2_VERSION 2.4.5
+ENV BOWTIE_VERSION 1.3.1
 
 RUN wget https://downloads.sourceforge.net/project/bowtie-bio/bowtie2/$BOWTIE2_VERSION/bowtie2-$BOWTIE2_VERSION-linux-x86_64.zip \
     && unzip -d /usr/bin bowtie2-$BOWTIE2_VERSION-linux-x86_64.zip
@@ -99,8 +105,8 @@ RUN wget https://downloads.sourceforge.net/project/bowtie-bio/bowtie2/$BOWTIE2_V
 RUN wget https://downloads.sourceforge.net/project/bowtie-bio/bowtie/$BOWTIE_VERSION/bowtie-$BOWTIE_VERSION-linux-x86_64.zip \
     && unzip -d /usr/bin bowtie-$BOWTIE_VERSION-linux-x86_64.zip \
     && chmod -R a+rwx /usr/bin/bowtie* \
-    && mv /usr/bin/bowtie2-2.2.8/* /usr/bin/ \
-    && mv /usr/bin/bowtie-*/bowtie* /usr/bin/
+    && mv /usr/bin/bowtie2*/* /usr/bin/ \
+    && mv /usr/bin/bowtie*/bowtie* /usr/bin/
 
 COPY etc/cld /var/www/cld 
 
