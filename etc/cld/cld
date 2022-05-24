@@ -968,7 +968,7 @@ if ($something{"GUI"}) {
 				   #$ref_organism_entry->insert('1.0',$something{"ref_organism"});
 					$opt_rsync=$make_database->Optionmenu(
 					   -options => [
-										["ensembl-pub"=>"rsync://ftp.ensembl.org/ensembl/pub/release-81/"],
+										["ensembl-pub"=>"rsync://ftp.ensembl.org/ensembl/pub/release-106/"],
 										["ensemblgenomes-protists"=>"rsync://ftp.ensemblgenomes.org/all/pub/protists/current/"],
 										["ensemblgenomes-plants"=>"rsync://ftp.ensemblgenomes.org/all/pub/plants/current/"],
 										["ensemblgenomes-fungi"=>"rsync://ftp.ensemblgenomes.org/all/pub/fungi/current/"],

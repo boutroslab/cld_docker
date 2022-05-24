@@ -1,4 +1,4 @@
-rsync://ftp.ensembl.org/ensembl/pub/release-81/
+rsync://ftp.ensembl.org/ensembl/pub/release-106/
 
 rsync://ftp.ensemblgenomes.org/all/pub/protists/current/
 
