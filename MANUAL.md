@@ -19,36 +19,46 @@ output directory when use run the Docker container: e.g. `-v ${PWD}:/data`
 
 ---
 
-`cld` can run 2 distinct tasks, **database creation** and 
-**library design**.
+`cld` can run 2 distinct tasks: **database creation** and **library design**.
 
 ## Database Creation
 
 Database creation is called using the `--task=make_database` command 
-	giving the organism name of interest, as it is denoted in ENSEMBLs ftp folder structure
+	giving the organism name of interest, as it is denoted in [ENSEMBLs ftp folder structure](https://www.ensembl.org/Homo_sapiens/Info/Index)
 	e.g. homo_sapiens, and the rsync url to the current ftp server of ENSEMBL, examples 
- 	can be found when cld  --help is called. After calling this function CLD will 
+ 	can be found when `cld  --help` is called. After calling this function CLD will 
  	automatically download the latest toplevel FASTA, GFF and GTF files for the organism 
  	of interest and compile a database containing bowtie indexes, mygff files and 
- 	reformatted sequence files. If not enough computing power is available to the user, 
+ 	reformatted sequence files. This may take several hours (~ 20 hours) to complete. If not enough computing power is available to the user, 
  	these databases also might be downloaded from http://www.dkfz.de/signaling/crispr-downloads/. 
 
 ## Library Design
 
-Library design can either be done in two steps: `cld --task=target_ident` and then `cld  --task=library_assembly` if the user wants 
- 	to separate the two steps for example in order to only identify target sites without 
- 	compiling a clonable library. 
- 	Else `cld  --task=end_to_end` which automatically will perform the steps mentioned before 
- 	and present the end-result in a user defined output folder. 
- 	For reasons of manageability for high throughput design, output files are kept 
- 	as simple and standardised as possible. However a genome wide library targeting 
- 	the human genome quickly spans several GB depending on how strict the parameters 
- 	are chosen. Since the end_to_end task takes most time we benchmarked its time 
- 	consumption to be approximately 1 h wall-time for an 8-core cpu node.
+Library design can be done in two ways: 
+
+### Two Step Process
+
+If the user wants to separate the process in two steps, then first call `cld --task=target_ident` 
+and then call `cld  --task=library_assembly`  This is useful to only identify target sites without 
+compiling a clonable library.
+	
+### Single Step Process
+
+If the user wants to run all operations in one command, then call `cld  --task=end_to_end`
+This automatically will perform the 2 steps mentioned before 
+and present the end-result in a user defined output folder (default = `/data`).
+
+# Compute Storage and Timing Considerations
+
+For reasons of manageability for high throughput design, the output files are kept 
+as simple and standardised as possible. However a genome wide library targeting 
+the human genome quickly spans several GB (~ 52 GB) depending on how strict the parameters 
+are chosen. 
+
+The `make_database` task takes under 20 hours to complete on an 8-core cpu node. 
+The `end_to_end` task takes a few minutes for an 8-core cpu node. 
  	
-
-
-For running cld from the command line the following syntax must be used.
+For running `cld` from the command line the following syntax must be used.
 
 ```
 Usage: cld  --task=end_to_end [options=value] ...
@@ -65,7 +75,7 @@ Options:
 								    it must be one of the organisms available in ENSEMBLs ftp repository.
 								    And in the same format as its ENSEMBL rsync directoy path.
 								    E.g.: 
-								    rsync://ftp.ensembl.org/ensembl/pub/release-160/  # https://www.ensembl.org/Homo_sapiens/Info/Index
+								    rsync://ftp.ensembl.org/ensembl/pub/release-160/  
 								    
 								    rsync://ftp.ensemblgenomes.org/all/pub/protists/current/
 
