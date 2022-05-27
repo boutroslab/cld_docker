@@ -1,4 +1,4 @@
-# CLD manual
+# CLD Manual
 
 `cld` can be called either with `--version`, printing its version number and copyrights, 
 `--help` printing a more elusive help documentation and with `--task`. 
