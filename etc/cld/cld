@@ -220,12 +220,12 @@ Options:
 								    it must be one of the organisms available in ENSEMBLs ftp repository.
 								    And in the same format as its ENSEMBL rsync directoy path.
 								    E.g.:
-									rsync://ftp.ensembl.org/ensembl/pub/release-81/
+									rsync://ftp.ensembl.org/ensembl/pub/release-106/
 								    
 								    rsync://ftp.ensemblgenomes.org/all/pub/protists/current/
 
 									rsync://ftp.ensemblgenomes.org/all/pub/plants/current/
-
+/
 									rsync://ftp.ensemblgenomes.org/all/pub/fungi/current/
 									
 									rsync://ftp.ensemblgenomes.org/all/pub/metazoa/current/
@@ -624,7 +624,7 @@ if ($something{"GUI"}) {
 				$something{"correct_5_prime_G"}=0                                         ;#
 				$something{"cover_many_transcripts"}=0                             ;#
 				$something{"sort_by_rank"}=0;
-				$something{"working_path"}=".";
+				$something{"working_path"}="/data";
 				$something{"custom_score"}=$something{"default_custom_score"}='
 			##########################################################################################
 			# Adapted to perl after Doench et al. 2014, NAt. Biotechnology
@@ -1719,6 +1719,7 @@ if ($something{"GUI"}) {
 		
 		
 		if($something{"task"} eq "make_database"){   
+			if(!defined($something{"working_path"}) or !(-d $something{"working_path"})){ $something{"working_path"}="/data" };
 			make_database(
 				  defined($something{"organism_db"}) ? $something{"organism_db"} : "drosophila_melanogaster",
 				  defined($something{"rsync_link"}) ? $something{"rsync_link"} : "rsync://ftp.ensembl.org/ensembl/pub/release-77/"
@@ -1730,7 +1731,7 @@ if ($something{"GUI"}) {
 			}
 			if(!defined($something{"gene_list_file_name"}) or !(-f $something{"gene_list_file_name"})){ die "The gene list file ".$something{"gene_list_file_name"}." could not be opened. Either the user has no rights the read it or the file does not exist." }
 			if(!defined($something{"param_file_name"}) or !(-f $something{"param_file_name"})){ die "The parameter list file ".$something{"param_file_name"}." could not be opened. Either the user has no rights the read it or the file does not exist." }
-			if(!defined($something{"working_path"}) or !(-d $something{"working_path"})){ $something{"working_path"}="." }
+			if(!defined($something{"working_path"}) or !(-d $something{"working_path"})){ $something{"working_path"}="/data" }
 			make_a_crispr_library(
 						 $something{"param_file_name"},
 						 $something{"gene_list_file_name"},
@@ -1743,7 +1744,7 @@ if ($something{"GUI"}) {
 			}
 			if(!defined($something{"gene_list_file_name"}) or !(-f $something{"gene_list_file_name"})){ die "The gene list file ".$something{"gene_list_file_name"}." could not be opened. Either the user has no rights the read it or the file does not exist." }
 			if(!defined($something{"param_file_name"}) or !(-f $something{"param_file_name"})){ die "The parameter list file ".$something{"param_file_name"}." could not be opened. Either the user has no rights the read it or the file does not exist." }
-			if(!defined($something{"working_path"}) or !(-d $something{"working_path"})){ $something{"working_path"}="." }
+			if(!defined($something{"working_path"}) or !(-d $something{"working_path"})){ $something{"working_path"}="/data" }
 			
 			if(defined($something{"coverage"})		and	$something{"coverage"}		=~m/([^\d]+)/g){ die "The gene coverage must be specified as an integer. Your input is not integer as it contains: $1." }
 			if(defined($something{"total_lib_size"})	and	$something{"total_lib_size"}	=~m/([^\d]+)/g){ die "The total library size must be specified as an integer. Your input is not integer as it contains: $1." }
@@ -1775,7 +1776,7 @@ if ($something{"GUI"}) {
 			}
 			if(!defined($something{"gene_list_file_name"}) or !(-f $something{"gene_list_file_name"})){ die "The gene list file ".$something{"gene_list_file_name"}." could not be opened. Either the user has no rights the read it or the file does not exist." }
 			if(!defined($something{"param_file_name"}) or !(-f $something{"param_file_name"})){ die "The parameter list file ".$something{"param_file_name"}." could not be opened. Either the user has no rights the read it or the file does not exist." }
-			if(!defined($something{"working_path"}) or !(-d $something{"working_path"})){ $something{"working_path"}="." }
+			if(!defined($something{"working_path"}) or !(-d $something{"working_path"})){ $something{"working_path"}="/data" }
 			if(!defined($something{"input_folder"}) or !(-d $something{"input_folder"})){die "The input folder ".$something{"input_folder"}." could not be opened. Either the user has no rights the read it or the file does not exist." }
 			if(defined($something{"coverage"})		and	$something{"coverage"}		=~m/([^\d]+)/g){ die "The gene coverage must be specified as an integer. Your input is not integer as it contains: $1." }
 			if(defined($something{"total_lib_size"})	and	$something{"total_lib_size"}	=~m/([^\d]+)/g){ die "The total library size must be specified as an integer. Your input is not integer as it contains: $1." }
@@ -4499,6 +4500,7 @@ sub find_and_print_CRISPRS {
 sub make_database{
         if (can_run('rsync') && can_run('wget') && (can_run('bowtie-build') && can_run('bowtie2-build'))) {                
 	    print $_[0]."\n"; #read organism from command-line
+	    chdir $something{"working_path"}; # Change to the output directory
 	    if(!(-d $_[0])){
 			mkdir $_[0];
 		}
