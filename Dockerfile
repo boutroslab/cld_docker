@@ -76,6 +76,7 @@ RUN perl -MCPAN -e 'CPAN::Shell->install("Tk")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("IPC::Cmd")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Getopt::Long")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("File::Grep")'
+RUN perl -MCPAN -e 'CPAN::Shell->install("File::Spec")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Text::Wrap")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Unix::Processors")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::PathEntry")'					#loads the interactive pathentry widget
