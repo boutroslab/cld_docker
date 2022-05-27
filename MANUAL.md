@@ -48,7 +48,7 @@ If the user wants to run all operations in one command, then call `cld  --task=e
 This automatically will perform the 2 steps mentioned before 
 and present the end-result in a user defined output folder (default = `/data`).
 
-# Compute Storage and Timing Considerations
+## Compute Storage and Timing Considerations
 
 For reasons of manageability for high throughput design, the output files are kept 
 as simple and standardised as possible. However a genome wide library targeting 
@@ -58,6 +58,8 @@ are chosen.
 The `make_database` task takes under 20 hours to complete on an 8-core cpu node. 
 The `end_to_end` task takes a few minutes for an 8-core cpu node. 
  	
+## Usage 
+
 For running `cld` from the command line the following syntax must be used.
 
 ```
