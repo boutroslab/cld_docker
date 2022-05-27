@@ -9,8 +9,20 @@ EXAMPLE to execute from the path containing all needed files:
 docker run -v ${PWD}:/data boutroslab/cld_docker cld --task=end_to_end --output-dir=/data --parameter-file=/data/params.txt --gene-list=/data/gene_list.txt	
 ```
 
-cld can run 2 distinct tasks, database creation and 
-library design.
+---
+**NOTE**
+
+The output directory defaults to `/data` within the Docker container. 
+You can overwrite this by setting `--output-dir` to any other directory
+within the container. Make sure that you mount your local directory to the
+output directory when use run the Docker container: e.g. `-v ${PWD}:/data`
+
+---
+
+`cld` can run 2 distinct tasks, **database creation** and 
+**library design**.
+
+## Database Creation
 
 Database creation is called using the `--task=make_database` command 
 	giving the organism name of interest, as it is denoted in ENSEMBLs ftp folder structure
@@ -21,8 +33,9 @@ Database creation is called using the `--task=make_database` command
  	reformatted sequence files. If not enough computing power is available to the user, 
  	these databases also might be downloaded from http://www.dkfz.de/signaling/crispr-downloads/. 
 
-Library design can either be done in two steps: `cld 
-	 `--task=target_ident` and then `cld  --task=library_assembly` if the user wants 
+## Library Design
+
+Library design can either be done in two steps: `cld --task=target_ident` and then `cld  --task=library_assembly` if the user wants 
  	to separate the two steps for example in order to only identify target sites without 
  	compiling a clonable library. 
  	Else `cld  --task=end_to_end` which automatically will perform the steps mentioned before 
