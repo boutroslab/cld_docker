@@ -28,6 +28,7 @@ use List::Util qw(sum);
 use Archive::Zip;
 use Parallel::ForkManager; #important package to enable mutlithreading of the script
 use Cwd;
+use File::Path qw(make_path);
 use IPC::Cmd qw[can_run run];
 use Getopt::Long qw(:config pass_through);	
 use File::Grep qw( fgrep fmap fdo );
@@ -1716,13 +1717,11 @@ if ($something{"GUI"}) {
 		   exit;
 		}
 		
-		
-		
 		if($something{"task"} eq "make_database"){   
-			if(!defined($something{"working_path"}) or !(-d $something{"working_path"})){ $something{"working_path"}="/data" };
 			make_database(
 				  defined($something{"organism_db"}) ? $something{"organism_db"} : "drosophila_melanogaster",
-				  defined($something{"rsync_link"}) ? $something{"rsync_link"} : "rsync://ftp.ensembl.org/ensembl/pub/release-77/"
+				  defined($something{"rsync_link"}) ? $something{"rsync_link"} : "rsync://ftp.ensembl.org/ensembl/pub/release-77/",
+				  defined($something{"working_path"}) ? $something{"working_path"} : "/data/",
 				  );
 		}elsif($something{"task"} eq "target_ident"){
 			if(!defined($something{"gene_list_file_name"})){
@@ -4499,12 +4498,19 @@ sub find_and_print_CRISPRS {
 
 sub make_database{
         if (can_run('rsync') && can_run('wget') && (can_run('bowtie-build') && can_run('bowtie2-build'))) {                
-	    print $_[0]."\n"; #read organism from command-line
-	    chdir $something{"working_path"}; # Change to the output directory
-	    if(!(-d $_[0])){
-			mkdir $_[0];
+	    print "Generating database for ".$_[0]."\n"; #read organism from command-line
+	    
+	    my $db_directory=$_[2]."/".$_[0];
+	    print "Creating database in directory = ".$db_directory."\n";
+	    
+	    if(!(-d $db_directory)){
+			make_path($db_directory);
 		}
-	    chdir $_[0];		
+	    chdir $db_directory;
+	    
+	    my $pwd = cwd();
+	    print "Working directory = ".$pwd."\n";
+	    
 		system('rsync '.$_[1].'fasta/'.$_[0].'/dna/ > temp.log;');
 		# Void context
 		if ( fgrep { /README/ } "temp.log" ) {
