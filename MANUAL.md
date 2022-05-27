@@ -38,7 +38,7 @@ Library design can be done in two ways:
 
 ### Two Step Process
 
-If the user wants to separate the process in two steps, then first call `cld --task=target_ident` 
+If the user wants to separate the process into two steps, then first call `cld --task=target_ident` 
 and then call `cld  --task=library_assembly`  This is useful to only identify target sites without 
 compiling a clonable library.
 	
