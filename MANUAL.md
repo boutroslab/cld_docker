@@ -1,14 +1,18 @@
-cld can be called either with “--version”, printing its version number and copyrights, 
-“--help” printing a more elusive help documentation and with “--task”. 
+# CLD manual
+
+`cld` can be called either with `--version`, printing its version number and copyrights, 
+`--help` printing a more elusive help documentation and with `--task`. 
 
 EXAMPLE to execute from the path containing all needed files:
 
-docker run -v ~/Desktop:/data boutroslab/cld_docker cld --task=end_to_end --output-dir=/data --parameter-file=/data/params.txt --gene-list=/data/gene_list.txt		    
+```
+docker run -v ${PWD}:/data boutroslab/cld_docker cld --task=end_to_end --output-dir=/data --parameter-file=/data/params.txt --gene-list=/data/gene_list.txt	
+```
 
 cld can run 2 distinct tasks, database creation and 
 library design.
 
-Database creation is called using the “--task=make_database” command 
+Database creation is called using the `--task=make_database` command 
 	giving the organism name of interest, as it is denoted in ENSEMBLs ftp folder structure
 	e.g. homo_sapiens, and the rsync url to the current ftp server of ENSEMBL, examples 
  	can be found when cld  --help is called. After calling this function CLD will 
@@ -17,11 +21,11 @@ Database creation is called using the “--task=make_database” command
  	reformatted sequence files. If not enough computing power is available to the user, 
  	these databases also might be downloaded from http://www.dkfz.de/signaling/crispr-downloads/. 
 
-Library design can either be done in two steps: “cld 
-	 --task=target_ident” and then “cld  --task=library_assembly” if the user wants 
+Library design can either be done in two steps: `cld 
+	 `--task=target_ident` and then `cld  --task=library_assembly` if the user wants 
  	to separate the two steps for example in order to only identify target sites without 
  	compiling a clonable library. 
- 	Else “cld  --task=end_to_end” which automatically will perform the steps mentioned before 
+ 	Else `cld  --task=end_to_end` which automatically will perform the steps mentioned before 
  	and present the end-result in a user defined output folder. 
  	For reasons of manageability for high throughput design, output files are kept 
  	as simple and standardised as possible. However a genome wide library targeting 
@@ -33,10 +37,12 @@ Library design can either be done in two steps: “cld
 
 For running cld from the command line the following syntax must be used.
 
+```
 Usage: cld  --task=end_to_end [options=value] ...
 Options:
 	    --task=<task option>
 		 make_database 				to provide an cld ready data base.
+		    --output-dir=<path/to/dir>			- a working directory as unix path to directory. (DEFAULT=/data)
 		    --organism=<string>		Specify an organism to build the database for.
 								    it must be one of the organisms available in ENSEMBLs ftp repository.
 								    And in the same format as its ENSEMBL ftp directoy name.
@@ -46,7 +52,7 @@ Options:
 								    it must be one of the organisms available in ENSEMBLs ftp repository.
 								    And in the same format as its ENSEMBL rsync directoy path.
 								    E.g.: 
-								    rsync://ftp.ensembl.org/ensembl/pub/release-81/
+								    rsync://ftp.ensembl.org/ensembl/pub/release-160/  # https://www.ensembl.org/Homo_sapiens/Info/Index
 								    
 								    rsync://ftp.ensemblgenomes.org/all/pub/protists/current/
 
@@ -57,13 +63,13 @@ Options:
 									rsync://ftp.ensemblgenomes.org/all/pub/metazoa/current/
 
 		 target_ident 					to identify target sequences.
-		    --output-dir=<path/to/dir>			- a working directory as unix path to directory.
+		    --output-dir=<path/to/dir>			- a working directory as unix path to directory. (DEFAULT=/data)
 		    --parameter-file=<path/to/dir>		- a parameter file in cld format as path to file.
 		    --gene-list=<path/to/dir>			- a gene list file with ENSEMBL IDs new-line seprated as path to file.
 			--scoring-module=<path/to/dir>		- the path and filename of a file defining a perl scoring function
 
 		 library_assembly 				to format a library from an identification folder.
-		    --output-dir=<path/to/dir>			- a working directory as unix path to directory.
+		    --output-dir=<path/to/dir>			- a working directory as unix path to directory. (DEFAULT=/data)
 		    --parameter-file=<path/to/dir>		- a parameter file in cld format as path to file.
 		    --gene-list=<path/to/dir>			- a gene list file with ENSEMBL IDs new-line seprated as path to file. 
 		    --cov=<int>						- Specify the minimum gene coverage as <int> default(15)
@@ -81,7 +87,7 @@ Options:
 													-an be : true or false (default:true)
 
 		 end_to_end 							to perform and end-to-end analysis from target identification to library formatting
-		    --output-dir=<path/to/dir>			- a working directory as unix path to directory.
+		    --output-dir=<path/to/dir>			- a working directory as unix path to directory. (DEFAULT=/data)
 		    --parameter-file=<path/to/dir>		- a parameter file in cld format as path to file.
 		    --gene-list=<path/to/dir>			- a gene list file with ENSEMBL IDs new-line seprated as path to file. 
 		    --cov=<int>						- Specify the minimum gene coverage as <int> default(15)
@@ -99,7 +105,9 @@ Options:
 	    --version							- Show version.
 	    --help								- Show this message.
 	    
-	    
+```	    
+
+## params.txt file format
 
 In the following table every parameters as can be defined in the parameter-file is explained in more detail.
 
@@ -155,6 +163,9 @@ In the following table every parameters as can be defined in the parameter-file 
 | scores | defines the on-target score to be used. The preset scores are derived from the algorithms proposed by  Xu et al. 2015 and Doench et al. 2014. However they are only defined for a 20 nt protospacer adjacent to a NGG PAM. | xu_score, doench_old or custom |
 | custom_score | defines a custom scoring function in perl code. the function needs to be unnamed and dependent on sequence information of the 30mer described in Doench et al.. Results of the function need to be numeric. | string in perl language defining a anonymous funtion, which acts on the Doench 30mer |
 | cover_many_transcripts | defines if priority in sgRNA choice for the final library should be given on maximum coverage of all transcripts of a gene. All other scores will be ignored but shown in the resulting tables. | boolean (1 or 0) |
+
+
+## .tab file format
 
 In the following table all output columns of the \*.tab files are explained in more detail:
 

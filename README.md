@@ -150,5 +150,5 @@ are chosen. Since the end_to_end task takes most time we benchmarked its time
 consumption to be approximately 1 h wall-time for an 8-core cpu node.
 
  	
-For running cld from the command line the syntax as outlined in the [MANUAL](https://github.com/boutroslab/cld/blob/master/MANUAL.md) must be used.
+For running cld from the command line the syntax as outlined in the [MANUAL](https://github.com/boutroslab/cld_docker/blob/master/MANUAL.md) must be used.
 
