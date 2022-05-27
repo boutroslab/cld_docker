@@ -99,6 +99,7 @@ RUN perl -MCPAN -e 'CPAN::Shell->install("Timer::Runtime")'
 ENV BOWTIE2_VERSION 2.4.5
 ENV BOWTIE_VERSION 1.3.1
 
+# Install BowTie and BowTie2
 RUN wget https://downloads.sourceforge.net/project/bowtie-bio/bowtie2/$BOWTIE2_VERSION/bowtie2-$BOWTIE2_VERSION-linux-x86_64.zip \
     && unzip -d /usr/bin bowtie2-$BOWTIE2_VERSION-linux-x86_64.zip
     

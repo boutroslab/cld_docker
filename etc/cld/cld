@@ -4501,16 +4501,14 @@ sub make_database{
         if (can_run('rsync') && can_run('wget') && (can_run('bowtie-build') && can_run('bowtie2-build'))) {                
 	    print "Generating database for ".$_[0]."\n"; #read organism from command-line
 	    
+	    # Create database directory (output_dir) if it doesn't exist
 	    my $db_directory=catfile($_[2],$_[0]);
 	    print "Creating database in directory = ".$db_directory."\n";
-	    
 	    if(!(-d $db_directory)){
 			make_path($db_directory);
 		}
+		# Change working directory to database directory
 	    chdir $db_directory;
-	    
-	    my $pwd = cwd();
-	    print "Working directory = ".$pwd."\n";
 	    
 		system('rsync '.$_[1].'fasta/'.$_[0].'/dna/ > temp.log;');
 		# Void context
