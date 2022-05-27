@@ -1,7 +1,7 @@
 # CLD Manual
 
 `cld` can be called either with `--version`, printing its version number and copyrights, 
-`--help` printing a more elusive help documentation and with `--task`. 
+`--help` printing a more elusive help documentation, or with `--task`. 
 
 EXAMPLE to execute from the path containing all needed files:
 
