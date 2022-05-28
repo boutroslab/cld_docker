@@ -3483,11 +3483,6 @@ sub score_micro_homolgy {
                               ( $count * exp( 0.1 * ( -$gaplength ) ) );
                         }
 
-#print "(@right_seq): $seq ".scalar(@right_seq)." ".$count." $stuff $position $rightarmstart hit"."\n";
-#print substr($string,($position-20),40)."\n";
-#print substr($string,($position-20),(20-$stuff+$count));
-#print '-' x ($stuff+($rightarmstart-$position-$count));
-#print substr($string,($rightarmstart),20-($rightarmstart-$position))."\n";
                     }
                     else {
                         next LEFTARM;
@@ -3504,12 +3499,12 @@ sub score_micro_homolgy {
 }
 
 =head2 hor_bar_chart
-#########################################################################################
+############################################################################
 #name:      hor_bar_chart
 #function:  print horizontal bar chart
 #input:     (@array(score 1, score 2, score 3))
 #output:    N/A
-#########################################################################################
+###########################################################################
 =cut
 
 sub hor_bar_chart {
@@ -3535,12 +3530,12 @@ sub hor_bar_chart {
 }
 
 =head2 filter_library
-#########################################################################################
+#########################################################################
 #name:      filter_library
 #function:  filter library and print orderable fasta files
 #input:     ()
 #output:    N/A
-#########################################################################################
+###########################################################################
 =cut
 
 sub filter_library {
@@ -3927,13 +3922,13 @@ sub filter_library {
 }
 
 =head2 create_popup
-#########################################################################################
+##############################################################################
 #name:      create_popup
 #function:  creates popup with. the target-, match- and querry-string adjusted to each
 #input:     (line of the outfile.tab as string, databasepath as string,
 #           $something{"unspecific_leading_bases"}, int overflow before and after Sequence)
 #output:    HTML formated string
-#########################################################################################
+##############################################################################
 =cut
 
 sub create_popup {
@@ -3949,7 +3944,8 @@ sub create_popup {
     my $insert     = 0;
 
     if ( $line[24] eq "rc" )
-    { #turn and translate the match and querry string if direction is reverse complementary
+    { #turn and translate the match and querry string if direction is 
+    #  reverse complementary
         $querry = reverse_comp( $line[5] );
         $querry =~ s/\s+//ig;
         $querry =~ s/^(\w{2})\w(\w+)/$1N$2/ig;
@@ -3961,7 +3957,8 @@ sub create_popup {
         $adjust = $_[2];
     }
 
-#search the target-string in database - substr workaround used, because the Bioperl function does not work proper with large numbers
+#search the target-string in database - substr workaround used, because the 
+#Bioperl function does not work proper with large numbers
     my $db =
       Bio::DB::Fasta->new( $_[1] . '.all.dna.fa', -makeid => \&make_my_id );
     my @target_name = split( "::", $line[18] );
@@ -4008,13 +4005,14 @@ sub create_popup {
 }
 
 =head2 create_popupD
-#########################################################################################
+#####################################################
 #name:      create_popupD
 #function:  for double sequence - does the same as create_popup
 #input:     (line of the outfile.tab as string, databasepath as string,
-#           $something{"unspecific_leading_bases"}, int overflow before and after Sequence)
+#           $something{"unspecific_leading_bases"}, int overflow 
+#              before and after Sequence)
 #output:    HTML formated string
-#########################################################################################
+#########################################################
 =cut
 
 sub create_popupD {
@@ -4060,12 +4058,15 @@ sub create_popupD {
           $_[3] -
           ( $leadingbases * 2 ) -
           ( $deletion0 * 2 )
-          ; # end of the match + spacer size + length of the matchstring + the wanted overflow on the right side - the count of unspec leadingbases*2 (1st and 2nd)
+          ; # end of the match + spacer size + length of the 
+          #  matchstring + the wanted overflow on the right side - 
+          #the count of unspec leadingbases*2 (1st and 2nd)
     }
     else {
         $querry[1] = reverse_comp( $querry[1] );
 
-#swap both query and matchstring and change the start and end points ($line[15] is no longer the start of the target cause the first query swaped)
+#swap both query and matchstring and change the start and end points 
+#($line[15] is no longer the start of the target cause the first query swaped)
         @querry[ 0, 1 ] = @querry[ 1, 0 ];
         @match[ 0,  1 ] = @match[ 1,  0 ];
         $match0 = $match[0];
@@ -4083,13 +4084,15 @@ sub create_popupD {
           $_[3] +
           $leadingbases - 1 -
           $deletion1
-          ; # swaped of the if-clause and reverted (-/+), but only the leadingbases of the 2nd string count here
+          ; # swaped of the if-clause and reverted (-/+), but only the 
+          #leadingbases of the 2nd string count here
         $end =
           $line[19] +
           $_[3] -
           $leadingbases -
           ( $deletion0 * 2 )
-          ; # swaped of the if-clause and reverted (-/+), but only the leadingbases of the 1st string count here
+          ; # swaped of the if-clause and reverted (-/+), but only the 
+          #leadingbases of the 1st string count here
     }
 
     if ( $start < 0 ) {
@@ -4109,7 +4112,8 @@ sub create_popupD {
         $spacer .= " ";
     }
 
-#search the target-string in database - substr workaround used, because the Bioperl function does not work proper with large numbers
+#search the target-string in database - substr workaround used, because 
+#the Bioperl function does not work proper with large numbers
     my $db =
       Bio::DB::Fasta->new( $_[1] . '.all.dna.fa', -makeid => \&make_my_id );
     my @target_name = split( "::", $line[17] );
@@ -4184,15 +4188,18 @@ sub create_popupD {
 }
 
 =head2 create_popup_string
-#########################################################################################
+#########################################################################
 #name:      create_popup_string
 #function:  adjusts a sequence for the popup-output
-#input:     (string sequence, int overflow from create_popup, boolean if it should be used,
-#           boolean if colored or not, string matchstring, 2nd overflow for double seq,
-#           boolean if the last letter should  only be popped for 2nd half - 1 = yes,
+#input:     (string sequence, int overflow from create_popup, boolean 
+#           if it should be used,
+#           boolean if colored or not, string matchstring, 2nd overflow 
+#           for double seq,
+#           boolean if the last letter should  only be popped 
+#           for 2nd half - 1 = yes,
 #           int additional left re-adjustment)
 #output:    HTML formated string
-#########################################################################################
+##########################################################################
 =cut
 
 sub create_popup_string {
@@ -4250,13 +4257,14 @@ sub create_popup_string {
 }
 
 =head2 make_temp_fasta_file
-#########################################################################################
+############################################################################
 #name:      make_temp_fasta_file
-#function:  creates a temporary fasta file for the bowtie index and builds a trees
+#function:  creates a temporary fasta file for the bowtie index and 
+#             builds a trees
 #input:     (given id-Array, tree as referemce, something-Hashreference,
 #           enzyme db, temp_dir, 1/0 if file or not)
 #output:    N/A
-#########################################################################################
+#########################################################################
 =cut
 
 sub make_temp_fasta_file {
@@ -4313,13 +4321,14 @@ sub make_temp_fasta_file {
 }
 
 =head2 make_temp_fasta_file_from_coords
-#########################################################################################
+#####################################################################
 #name:      make_temp_fasta_file
-#function:  creates a temporary fasta file for the bowtie index and builds a trees
+#function:  creates a temporary fasta file for the bowtie index and 
+#                builds a trees
 #input:     (given id-Array, tree as referemce, something-Hashreference,
 #           enzyme db, temp_dir, 1/0 if file or not)
 #output:    N/A
-#########################################################################################
+###############################################################
 =cut
 
 sub make_temp_fasta_file_from_coords {
@@ -4377,12 +4386,13 @@ sub make_temp_fasta_file_from_coords {
 }
 
 =head2 make_a_crispr_library
-#########################################################################################
+##########################################################################
 #name:      make_a_crispr_library
-#function:  makes a large scale crispr library file from a list of gene names and a parameter file
+#function:  makes a large scale crispr library file from a list of gene names 
+#               and a parameter file
 #input:     (gene_list <string>, parameterfile <string>, database <string>)
 #output:    table of CRISPRS and hash for statistics
-#########################################################################################
+##########################################################################
 =cut
 
 sub make_a_crispr_library {
@@ -4406,7 +4416,8 @@ sub make_a_crispr_library {
         print $temp_dir , "\n";
         mkdir($temp_dir) or die $!;
 
-#read in the parameter file, must contain each parameter with name and value '=' separated, without any quotes
+#read in the parameter file, must contain each parameter with name 
+# and value '=' separated, without any quotes
         open( my $parameterfile, "<", $_[0] )
           or die $_[0] . "could not be opened. No such file or directory.";
         foreach my $element (<$parameterfile>) {
@@ -4443,9 +4454,9 @@ sub make_a_crispr_library {
         $something{"databasepath"}
       . $something{"ref_organism"} . "/"
       . $something{"ref_organism"};
-    #################################################################################################################################################################################
+    ##################################################################
     # upload a file and save it in the temp directory for bowtie
-    #################################################################################################################################################################################
+    #######################################################################
     if ( $something{"sec_off_target"} == 1 ) {
         if ( -e $something{"databasepath"} . 'secondary_off_targets.fasta' ) {
             system( $aligner_path
@@ -4461,9 +4472,11 @@ sub make_a_crispr_library {
               . "could not be opened. No such file or directory.";
         }
     }
-    #################################################################################################################################################################################
-# For ENSEMBLE: define the path to the bowtie index and do checks if an database entry is found for the ensemble accesion number - if all checks passed, create the $seqio_obj
-    #################################################################################################################################################################################
+    #######################################################################
+# For ENSEMBLE: define the path to the bowtie index and do checks if an 
+# database entry is found for the ensemble accesion number - if all checks 
+# passed, create the $seqio_obj
+    #######################################################################
     if (   $something{"data_type"} eq "ensemble_acc"
         || $something{"data_type"} eq "gene_symbol" )
     {
@@ -4499,9 +4512,11 @@ sub make_a_crispr_library {
         );    #read the temporary fasta file
     }
     elsif ( $something{"data_type"} eq "fasta" ) {
-        #################################################################################################################################################################################
-# For FASTA: define the path to the bowtie index and do checks if the fasta sequence/file is in the right format - if all checks passed, create the $seqio_obj
-        #################################################################################################################################################################################
+        #################################################################
+# For FASTA: define the path to the bowtie index and do checks if the fasta 
+# sequence/file is in the right format - if all checks passed, 
+# create the $seqio_obj
+        #####################################################################
         my $count = 0;
         my $temp  = "";
         my %seen;
@@ -4537,7 +4552,8 @@ sub make_a_crispr_library {
           )
           or die
 "Your input wasn't FASTA format \n e.g.: >some Sequence<br>AGCTGATCGATCTAGCTAGCTGCTAGCTAGTCGATCGATGCTAGCTAGCTAGCTGCTAG\n"
-          ; #if neither online or pasted sequences are used it will use the input file as sequence input
+          ; #if neither online or pasted sequences are used it will use the 
+            #    input file as sequence input
     }
     elsif ( $something{"data_type"} eq "coordinates" ) {
         my $db = Bio::DB::Fasta->new( $databasepath . '.dna.toplevel.fa',
@@ -4573,15 +4589,16 @@ sub make_a_crispr_library {
             -format => "fasta"
         );    #read the temporary fasta file
     }
-    #################################################################################################################################################################################
+    ########################################################################
     # Start the creation of the report
-    #################################################################################################################################################################################
+    #############################################################################
     #define empty object to be filled in the process
     my $fname              = "";
     my $dont_asses_context = 0;
-    #################################################################################################################################################################################
-#start the main loop which is looping through the sequence found in the SeqIO object, may be one or many more
-    #################################################################################################################################################################################
+    ###################################################################
+#start the main loop which is looping through the sequence found in the 
+# SeqIO object, may be one or many more
+    #############################################################
     my %statistics  = ();
     my %CRISPR_hash = ();
     my %CRISPR_cnt  = ();
@@ -4597,17 +4614,20 @@ sub make_a_crispr_library {
         my %statistics  = ();
         my %CRISPR_hash = ();
 
-#find the genomic coordinates of the sequence either directly from the fasta sequence or from other smyces
+#find the genomic coordinates of the sequence either directly from the 
+#fasta sequence or from other smyces
         my $chrom           = "";    #create an empty name chromosome
         my $location_offset = 0;
         my $location_end    = 0;     #set the location offset value to 0
         if ( ( $seq_obj->description ) =~ m/chrom:([\w\.]+):(\d+)..(\d+)/ig )
-        { #if the descrition of the sequence contains information of the form loc=chr1:0..13000000
+        { #if the descrition of the sequence contains information of the form 
+                #loc=chr1:0..13000000
                 #print the result of the pattern matching
             $chrom = $1;   #save the location information in the certain objects
             $location_offset = $2;
             $location_end    = $3
-              ; #the location offset is the start of the sequence on that certain chromosome, for the whole chromosome this is of cause 0
+              ; #the location offset is the start of the sequence on that 
+                 #certain chromosome, for the whole chromosome this is of cause 0
             if ( !exists $trees{$chrom} ) {
                 $trees{$chrom} =
                   build_tree( $something{"databasepath"}
@@ -4632,7 +4652,8 @@ sub make_a_crispr_library {
             $chrom = $fname;
         }    #if $chrom is still empty fill it with the sequence' id
         my $whole_seq = $seq_obj->seq
-          ; #deduce the complete nucleotide sequence as a alphanumerical string from the SeqIo object
+          ; #deduce the complete nucleotide sequence as a alphanumerical 
+            # string from the SeqIo object
         if ( $statistics{$fname}{"seq_length"} != 0 ) {
             if ( int( log( $statistics{$fname}{"seq_length"} ) ) <= 8 ) {
                 if ( int( log( $statistics{$fname}{"seq_length"} ) ) >= 2 ) {
@@ -4654,12 +4675,13 @@ sub make_a_crispr_library {
             $parallel_number = 2;
         }
 
-        ###########################################################################################################################################################################
+        #################################################################
         #create the hashes for the CRISPR and the statistics
-        ###########################################################################################################################################################################
+        ######################################################################
         if ( !( -e $temp_dir . "/" . $fname . '.json' ) ) {
             if ( !exists $CRISPR_hash{$fname} )
-            { #only execute following calucaltions if it is not already done for the sequence
+            { #only execute following calucaltions if it is not already 
+              #done for the sequence
                 my @findings = find_and_print_CRISPRS(
                     \$seq_obj,        $chrom,              $location_offset,
                     \%trees,          $dont_asses_context, $temp_dir,
@@ -4683,7 +4705,8 @@ sub make_a_crispr_library {
         print "$fname has been searched for designs. Search is done "
           . ( $seqcount / $maxcount * 100 ) . " %.\n";
         if ( defined $something{"GUI"} ) { $mw->update; }
-    } # end the loop after Hash and statistic were created, so the Bowtie Magic will be executed only once
+    } # end the loop after Hash and statistic were created, so the Bowtie 
+         #Magic will be executed only once
     %statistics  = ();
     %CRISPR_hash = ();
     foreach my $fname (@fname_array) {
@@ -4707,9 +4730,9 @@ sub make_a_crispr_library {
         }
 
     }
-    ###########################################################################################################################################################################
+    ########################################################################
     #Bowtie for single sequence
-    ###########################################################################################################################################################################
+    ##########################################################################
     if ( $something{"kind"} eq "single" ) {
         open( my $crisprs, ">", $temp_dir . "/temp_CRISPRS.fasta" );
         foreach my $seq ( sort( keys(%CRISPR_hash) ) ) {
@@ -4806,7 +4829,7 @@ sub make_a_crispr_library {
         if ( $something{"targets-allowed"} > 30 ) {
             $k = $something{"targets-allowed"} + 1;
         }
-        #####################################################################################################################################################################
+        ##############################################################
         #teemp_sec
         if ( $something{"bowtie_version"} eq "bowtie2" ) {
             if ( $something{"offtargetdb"} eq "gDNA" ) {
@@ -4907,27 +4930,7 @@ sub make_a_crispr_library {
                 }
             }
         }
-        else {
-#my $length=$something{"min_length"}-$something{"unspecific_leading_bases"}+length($something{"PAM"});
-# if ($something{"offtargetdb"} eq "gDNA") {
-#        if (!-e  $databasepath.".blast.gDNA.nsq") {
-#            system($aligner_path."makeblastdb -in ".$databasepath.".all.dna.fa -dbtype nucl -title ".$something{"ref_organism"}.".blast.gDNA -out ".$databasepath.".blast.gDNA -parse_seqids");
-#        }
-#        system( $aligner_path.'blastn -db '.$databasepath.'.blast.gDNA -query '. $temp_dir . "/" . 'temp_CRISPRS.fasta -task blastn-short -outfmt 15 -parse_deflines -num_threads '.$parallel_number.' | sed "s/lcl|//g" | grep "AS:i:'.$length.'"  > ' . $temp_dir .'/temp_out.bwt' );
-#    }elsif($something{"offtargetdb"} eq "cDNA"){
-#        if (!-e  $databasepath.".blast.cDNA.nsq") {
-#                system($aligner_path."makeblastdb -in ".$databasepath.".cdna.all.fa -dbtype nucl -title ".$something{"ref_organism"}.".blast.cDNA -out ".$databasepath.".blast.cDNA -parse_seqids");
-#        }
-#         system( $aligner_path.'blastn -db '.$databasepath.'.blast.cDNA -query '. $temp_dir . "/" . 'temp_CRISPRS.fasta -task blastn-short -outfmt 15 -parse_deflines -num_threads '.$parallel_number.' | sed "s/lcl|//g" | grep "AS:i:'.$length.'"  > ' . $temp_dir .'/temp_out.bwt' );
-#    }else{
-#        if (!-e  $databasepath.".blast.genome.nsq") {
-#                system($aligner_path."makeblastdb -in ".$databasepath.".dna.toplevel.fa -dbtype nucl -title ".$something{"ref_organism"}.".blast.genome -out ".$databasepath.".blast.genome -parse_seqids");
-#         }
-#        system( $aligner_path.'blastn -db '.$databasepath.'.blast.genome -query '. $temp_dir . "/" . 'temp_CRISPRS.fasta -task blastn-short -outfmt 15 -parse_deflines -num_threads '.$parallel_number.' | sed "s/lcl|//g" | grep "AS:i:'.$length.'"  > ' . $temp_dir .'/temp_out.bwt' );
-#
-#    }
-#
-        }
+        
         my $id  = "";
         my $seq = "";
         open( my $bowtie, "<", $temp_dir . "/temp_out.bwt" );
@@ -5029,7 +5032,9 @@ sub make_a_crispr_library {
                             if ( $something{"offtargetdb"} eq "genomeDNA" ) {
                                 my $namestuff = "";
                                 if ( !exists $trees{ $line[2] } )
-                                { #TODO if und else fast identisch, aber relativ kurzer Part und daher Funktion performancetechnisch nachteilig
+                                { #TODO if und else fast identisch, aber relativ 
+                                  #kurzer Part und daher Funktion 
+                                  #performancetechnisch nachteilig
                                     $trees{ $line[2] } =
                                       build_tree( $something{"databasepath"}
                                           . $something{"ref_organism"} . "/"
@@ -5117,9 +5122,10 @@ sub make_a_crispr_library {
 
         unlink $temp_dir . "/temp_out.bwt";
         if ( $something{"sec_off_target"} == 1 ) {    #ckeck if this is wanted
-            ###############################################################################################################################################################
+            #################################################################
 
-#do send a bowtie2 job fot the two temporary written fasta files as if they were paired seqencing reads and save the result in a ~out.bwt file
+#do send a bowtie2 job fot the two temporary written fasta files as if they 
+#were paired seqencing reads and save the result in a ~out.bwt file
             system( 'bowtie2 -p '
                   . $parallel_number
                   . '  -f -k '
@@ -5158,9 +5164,9 @@ sub make_a_crispr_library {
     }
     else {
 
-        #####################################################################################################################################################################
+        #####################################################################
         #Bowtie for double sequence
-        #####################################################################################################################################################################
+        #############################################################
 
         open( my $leftcrisprs,  ">", $temp_dir . "/temp_LEFTCRISPRS.fasta" );
         open( my $rightcrisprs, ">", $temp_dir . "/temp_RIGHTCRISPRS.fasta" );
@@ -5209,7 +5215,7 @@ sub make_a_crispr_library {
         close($leftcrisprs);
         close($rightcrisprs);
 
-        #####################################################################################################################################################################
+        #######################################################################
         #teemp_sec
         if ( $something{"offtargetdb"} eq "gDNA" ) {
             system( 'bowtie2 -p '
@@ -5271,7 +5277,9 @@ sub make_a_crispr_library {
             my @line = split( "\t", $line );
             if ( $line[2] ne "*" ) {
 
-#decide if it is forward (fw) or backward (rc) query-sequence - only for the first pair, the 2nd will be the oposite - Workaround: oposite interpretation of the flag-numbers
+#decide if it is forward (fw) or backward (rc) query-sequence - only for 
+#the first pair, the 2nd will be the oposite - Workaround: oposite 
+#interpretation of the flag-numbers
                 my $direction = "fw";
                 if (   $line[1] == 97
                     || $line[1] == 99
@@ -5329,7 +5337,10 @@ sub make_a_crispr_library {
                                 {
                                     my $namestuff = "";
                                     if ( !exists $trees{ $line[2] } )
-                                    { #TODO if und else fast identisch, aber relativ kurzer Part und daher Funktion performancetechnisch nachteilig
+                                    { 
+                                        #TODO if und else fast identisch, 
+                                        #aber relativ kurzer Part und daher 
+                                        #Funktion performancetechnisch nachteilig
                                         $trees{ $line[2] } =
                                           build_tree( $something{"databasepath"}
                                               . $something{"ref_organism"} . "/"
@@ -5522,14 +5533,14 @@ sub make_a_crispr_library {
         unlink $temp_dir . "/temp_LEFTCRISPRS.fasta";
         unlink $temp_dir . "/temp_RIGHTCRISPRS.fasta";
         unlink $temp_dir . "/temp_out.bwt";
-        #####################################################################################################################################################################
+        #######################################################
        #  if ( exists $something{"sec_off_target"} ) needed for double! @Florian
-        #####################################################################################################################################################################
+        #############################################################
     }
 
-    ###########################################################################################################################################################################
+    ##########################################################################
     #Evaluate the infos of the CRISPR-Hash (additional information, changes)
-    ###########################################################################################################################################################################
+    ####################################################################
     #open(my $debug_log, ">", "debug_log.txt") or die $!;
     my $number_of_hits = 1;
   SEQLOOP: foreach my $fname ( keys(%CRISPR_hash) ) {
@@ -5628,9 +5639,10 @@ sub make_a_crispr_library {
     }
 
     #close($debug_log);
-    #################################################################################################################################################################################
-#reopen the main loop which is looping through the sequence found in the SeqIO object, may be one or many more
-    #################################################################################################################################################################################
+    ##############################################################
+#reopen the main loop which is looping through the sequence found in the 
+#SeqIO object, may be one or many more
+    ##########################################################################
     $seqio_obj = Bio::SeqIO->new(
         -file   => $temp_dir . "/tempfile.fasta",
         -format => "fasta"
@@ -5663,9 +5675,9 @@ sub make_a_crispr_library {
         my $whole_seq = $seq_obj->seq
           ; #deduce the complete nucleotide sequence as a alphanumerical string from the SeqIo object
 
-        ###########################################################################################################################################################################
+        #######################################################################
         #Build te image of the gene
-        ###########################################################################################################################################################################
+        ######################################################################
         my %transcripts_hash = ();
         my %CDS_hash         = ();
         if ( $CRISPR_cnt{$fname} == 0 )
@@ -5763,9 +5775,9 @@ sub make_a_crispr_library {
               @{ ${ ${ $CRISPR_hash{$fname} }{$key} }{"score"} }[2];
         }
 
-        #####################################################################################################################################################################
+        ############################################################
         # Create the Table for the findings
-        #####################################################################################################################################################################
+        #################################################################
 
         open( my $outfiletab,
             ">", $temp_dir . "/" . $fname . "_" . "table.tab" );
@@ -6801,9 +6813,9 @@ sub make_a_crispr_library {
             }    #end of printloop
         }
         close $outfiletab;
-        #####################################################################################################################################################################
+        #####################################################################
         #If asked, write all the stuff to a gff format file
-        #####################################################################################################################################################################
+        #####################################################################
 
         if ( $something{"out_gff"} == 1 ) {
             open( my $gfffile, ">", $temp_dir . "/" . $fname . ".gff" )
@@ -6830,8 +6842,6 @@ sub make_a_crispr_library {
             {
                 my @locus = split( "::", $statistics{$fname}{"seq_location"} );
 
-# print $gfffile $locus[0]."\tcld\tCRISPRtarget\t".(${ ${ $CRISPR_hash{$fname} } {$key} }{"start"}-500+$locus[1])."\t";
-#print $gfffile (${ ${ $CRISPR_hash{$fname} } {$key} }{"end"}-500+$locus[1])."\t".sum(@{${ ${ $CRISPR_hash{$fname} } {$key} }{"score"}})."\t";
                 print $gfffile $locus[0]
                   . "\tcld\tCRISPRtarget\t"
                   . (
@@ -6857,7 +6867,10 @@ sub make_a_crispr_library {
                 print $gfffile "eff_score="
                   . ${ ${ $CRISPR_hash{$fname} }{$key} }{"custom_score"} . "; ";
 
-#die "correct the PAM in the output gff\nALSO CORRECT IN E_CRISP V5\nAdd the option to sort by new DOENCH score\nadd option to also sort by DOENCH off-target score\nStore all other options in something\nManage GUI option\n";
+#die "correct the PAM in the output gff\nALSO CORRECT IN E_CRISP V5
+#\nAdd the option to sort by new DOENCH score\nadd option to also sort 
+#by DOENCH off-target score\nStore all other options in something\n
+#Manage GUI option\n";
                 if ( $something{"kind"} eq "single" ) {
                     if ( $something{"PAM_location"} eq "5_prime" ) {
 
@@ -6962,9 +6975,9 @@ sub make_a_crispr_library {
             close $gfffile;
         }
 
-        #####################################################################################################################################################################
+        ###########################################################
         # ZIP the stuff
-        #####################################################################################################################################################################
+        ###############################################################
 
         #unlink $temp_dir . "/tempfile.fasta";
         my $zip    = Archive::Zip->new();
@@ -6977,9 +6990,9 @@ sub make_a_crispr_library {
             $fname . "_CRISPR.tab" );
         $zip->writeToFileNamed( $temp_dir . '/' . $fname . '.zip' );
 
-        #####################################################################################################################################################################
-# Print the report site with the results (header was created earlier in the loop)
-        #####################################################################################################################################################################
+        #######################################################################
+# Print the report site with the results (header was created earlier in loop)
+        ######################################################################
         $CRISPR_cnt{$fname}++;
         print "$fname is completed 100%\n";
         if ( defined $something{"GUI"} ) { $mw->update; }
@@ -7067,13 +7080,14 @@ sub make_a_crispr_library {
 }
 
 =head2 find_and_print_CRISPRS
-#########################################################################################
+############################################################################
 #name:      find_and_print_CRISPRS
 #function:  find the CRISPRS and build a hash for CRISPRS and the statistics...
-#input:     (chrom, location_offset, builded tree as reference, dont_asses_context,
-#           global temp_dir, parallel_number, something-Hashreference)
+#input:     (chrom, location_offset, builded tree as reference, 
+#           dont_asses_context,global temp_dir, parallel_number, 
+#           something-Hashreference)
 #output:    hash for CRISPRS and hash for statistics
-#########################################################################################
+#######################################################################
 =cut
 
 sub find_and_print_CRISPRS {
@@ -7143,24 +7157,25 @@ sub find_and_print_CRISPRS {
         push @cuts, $cut;
         $cut = $cut + $cutnumber;
     }
-    #################################################################################################################################################################################
-# cut the sequence into equal peaces, so that each forked child can work on one part (paralell!)
-    #################################################################################################################################################################################
+    ##########################################################################
+# cut the sequence into equal peaces, so that each forked child can work 
+#  on one part (paralell!)
+    #####################################################################
 
     foreach $cut (@cuts) {
         my $seq = substr( $whole_seq, $cut, $cutnumber );
         $pm->start and next;
         my %CRISPR_hash = ();
 
-        ###########################################################################################################################################################################
+        ##########################################
         # Single Sequence
-        ###########################################################################################################################################################################
+        #######################################################
 
         if ( $something{"kind"} eq "single" ) {
 
-            #####################################################################################################################################################################
+            ##################################################################
             # Foward Sequence Calculations
-            #####################################################################################################################################################################
+            ###########################################################
 
             my @lengths;
           LENGTHLOOP: foreach my $length ( $minlength .. $maxlength ) {
@@ -7262,9 +7277,9 @@ sub find_and_print_CRISPRS {
                             );
                         }
 
-                        #############################################################################################################################################
+                        #################################
                         #Statistics
-                        #############################################################################################################################################
+                        ######################################
 
                         if ( $something{"retrieve_recomb_matrix"} == 1 ) {
                             ${ ${ $CRISPR_hash{$name} }{"homology"} }{"left"} =
@@ -7298,7 +7313,7 @@ sub find_and_print_CRISPRS {
                         {
                             delete $CRISPR_hash{$name};
                         }
-                        #############################################################################################################################################
+                        ################################
 
                     }
                     else {
@@ -7311,9 +7326,9 @@ sub find_and_print_CRISPRS {
         }
         else {
 
-            #####################################################################################################################################################################
+            ##############################################################
             # Double Sequence - only forward calculations needed
-            #####################################################################################################################################################################
+            ############################################################
             my %Gpos = make_pos_index( \$seq, "G" );
             my %Cpos = make_pos_index( \$seq, "C" );
             my %Apos = make_pos_index( \$seq, "A" );
@@ -7481,9 +7496,9 @@ sub find_and_print_CRISPRS {
                                     $chrom, 0, \@new_score, $gene_id
                                 );
 
-                                #######################################################################################################################################
+                                ##############################
                                 #Statistics
-                                #######################################################################################################################################
+                                #############################
 
                                 if (
                                     make_CRISPR_statistics(
@@ -7522,8 +7537,7 @@ sub find_and_print_CRISPRS {
                                 ${ $CRISPR_hash{$name} }{"strand"} = "plus";
                                 $count++;
 
-                                #######################################################################################################################################
-
+                                ###########################
                             }
                             else {
                                 $tempstatistics{
@@ -7537,9 +7551,10 @@ sub find_and_print_CRISPRS {
             }
         }
 
-        ##########################################################################################################################################################################
-#store the CRISPR and the Statistics in temporary files - for each child process and end the fork
-        ##########################################################################################################################################################################
+        ###############################################################
+#store the CRISPR and the Statistics in temporary files - for each child
+#process and end the fork
+        #######################################################
 
         {
             my $json = JSON::XS::encode_json( \%CRISPR_hash );
@@ -7560,9 +7575,10 @@ sub find_and_print_CRISPRS {
         $pm->finish();
     }
 
-    ##########################################################################################################################################################################
-#parent wait till all children are done and then rebuild the CRISPR and the Statistics out of the temporary files
-    ##########################################################################################################################################################################
+    ##########################################################################
+#parent wait till all children are done and then rebuild the CRISPR and the 
+#Statistics out of the temporary files
+    ########################################################################
 
     $pm->wait_all_children();
     foreach my $cut (@cuts) {
@@ -8117,7 +8133,8 @@ sub include_cpg {
                       . $line[2] . "\t"
                       . $line[1] . "\t"
                       . $line[2] . "\n"
-                      ; #add CpG_[start]_[stop]\t[start]\t[stop] to [seqname]_indexed.mygff
+                      ; #add CpG_[start]_[stop]\t[start]\t[stop] 
+                        #to [seqname]_indexed.mygff
                 }
                 close INFILE;
                 close OUTFILE;
@@ -8364,7 +8381,6 @@ sub predict_cpg_islands {
                                         $cgr = ( int( $cgr * 10 ) ) / 10;
                                         $cgs = ( int( $cgs * 1000 ) ) / 1000;
 
-#	print "<FONT SIZE=-1>CpG island $CpGno start=$start,end=$end,\%GC=$cgr,ObsCpG/ExpCpG=$cgs,Length=$cpglength</FONT><BR>\n";
                                         print OUT
                                           "$start,$end,$cgr,$cgs,$cpglength\n";
                                         $CpGstart = $end - 1;
@@ -8487,9 +8503,7 @@ sub predict_cpg_islands {
                 print OUT "CpG island "
                   . "$q,$cpginf[$m-1]->[0],$cpginf[$m-1]->[1],$cpginf[$m-1]->[2],$cpginf[$m-1]->[3],$cpginf[$m-1]->[4]\n";
 
-#print "$contigname, CpG island $q, start=$cpginf[$m-1]->[0], end=$cpginf[$m-1]->[1], \%GC=$cpginf[$m-1]->[2], ObsCpG/ExpCpG=$cpginf[$m-1]->[3], Length=$cpginf[$m-1]->[4]\n";
-#				print "$contigname, CpG island $q, $cpginf[$m-1]->[0], $cpginf[$m-1]->[1], $cpginf[$m-1]->[2], $cpginf[$m-1]->[3], $cpginf[$m-1]->[4]\n";
-                $q++;
+               $q++;
             }
         }
         if ( $q == 1 ) {
@@ -8522,23 +8536,24 @@ sub predict_cpg_islands {
 
     #unlink($filename)
 }
-#########################################################################################
+#############################################################################
 #name:      comp
 #function:  complement a DNA sequence without reversing it
 #input:     string
 #output:    string
-#########################################################################################
+############################################################################
 sub comp {
     my $comp = $_[0];
     $comp =~ tr/ACGT/TGCA/;
     return $comp;
 }
-#########################################################################################
+############################################################################
 #name:      translate_IUPAC
-#function:  translate an DNA IUPAC code to ACGT basepaircode in regular expression, perl style
+#function:  translate an DNA IUPAC code to ACGT basepaircode in 
+#               regular expression, perl style
 #input:     < string >
 #output:    < string >
-#########################################################################################
+###############################################################################
 sub translate_IUPAC {
     my $reg_exp = $_[0];
     $reg_exp =~ s/U/T/g;
@@ -8556,12 +8571,13 @@ sub translate_IUPAC {
     $reg_exp =~ s/N/[ACGTU]/g;
     return $reg_exp;
 }
-#########################################################################################
+######################################################################
 #name:      from_pam_to_fasta_combis
-#function:  find every possble ACGT sequence out of any given IUPAC sequence of any given length
+#function:  find every possble ACGT sequence out of any given IUPAC 
+#              sequence of any given length
 #input:     string
 #output:    string
-#########################################################################################
+#########################################################################
 sub from_pam_to_fasta_combis {
     my %translator;
     @{ $translator{"U"} } = "T";
@@ -8602,12 +8618,12 @@ sub from_pam_to_fasta_combis {
     }
     return (@old_words);
 }
-#########################################################################################
+#############################################################################
 #name:      rev_com_IUPAC
 #function:  reverse complement IUPAC nucleobases to IUPAC nulceobases
 #input:     < string >
 #output:    < string >
-#########################################################################################
+#########################################################################
 sub rev_com_IUPAC {
     my $rev = reverse $_[0];
     $rev =~ s/U/T/g;
@@ -8615,12 +8631,14 @@ sub rev_com_IUPAC {
     return $rev;
 }
 
-#########################################################################################
+##########################################################################
 #name:      calc_doench_score
-#function:  Calculate CRISPR Score after Doench et al. 2014 Rational design of highly active sgRNAs for CRISPR-Cas9�mediated gene inactivation
+#function:  Calculate CRISPR Score after Doench et al. 2014 Rational design 
+#              of highly active sgRNAs for CRISPR-Cas9�mediated gene i
+#              nactivation
 #input:     < string > #lengt 30 mandatory
 #output:    <numeric double>
-#########################################################################################
+#############################################################################
 sub calc_doench_score {
     my $score;
     if ( length( $_[0] ) == 30 ) {
@@ -8725,12 +8743,14 @@ sub calc_doench_score {
         return (0);
     }
 }
-#########################################################################################
+##############################################################################
 #name:      calc_XU_score
-#function:  Calculate CRISPR Score after XU et al. 2015 Sequence determinants of improved CRISPR sgRNA design
-#input:     < string > #lengt 30 mandatory 20 Protspacer followed by 10 including NGG PAM
+#function:  Calculate CRISPR Score after XU et al. 2015 Sequence determinants 
+#             of improved CRISPR sgRNA design
+#input:     < string > #lengt 30 mandatory 20 Protspacer followed by 10 
+#                 including NGG PAM
 #output:    <numeric double>
-#########################################################################################
+##############################################################################
 sub calc_XU_score {
     my $score = 0;
     if ( length( $_[0] ) == 30 ) {
@@ -8780,12 +8800,12 @@ sub calc_XU_score {
         return (0);
     }
 }
-#########################################################################################
+#####################################################################
 #name:      rndStr
 #function:  generate a random string of n characters from a array A
 #input:     n < int >, A <char array>
 #output:    <string>
-#########################################################################################
+#########################################################################
 sub rndStr {
     join "", @_[ map { rand @_ } 1 .. shift ];
 }
