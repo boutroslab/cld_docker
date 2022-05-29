@@ -1,7 +1,7 @@
 #!/usr/bin/perl
-###################################################################################################################################################################################################
+###############################################################################
 # initialize geneneral cld settings and import perl dependencies
-###################################################################################################################################################################################################
+###############################################################################
 
 #use strict;
 #use warnings FATAL => 'all';
@@ -74,9 +74,9 @@ $| = 1;
 my ( $script_name, $script_version, $script_date, $script_years ) =
   ( 'cld', '1.5', '2019-01-08', '2013-2019' );
 
-###################################################################################################################################################################################################
+###########################################################
 # initialize all GUI and command line variables
-###################################################################################################################################################################################################
+###########################################################
 my (
     %parameter_presets,            %something,
     $annotation_options_frame,     $annotation_options_page,
@@ -132,9 +132,9 @@ my (
     $funct_results
 );
 
-###################################################################################################################################################################################################
+###########################################################
 # read in command line options
-###################################################################################################################################################################################################
+###########################################################
 
 GetOptions(
     'task=s'                    => \$something{"task"},
@@ -157,9 +157,9 @@ GetOptions(
     'scoring-module=s'          => \$something{"scoring_module"}
 );
 
-###################################################################################################################################################################################################
+###########################################################
 # define help and version strings
-###################################################################################################################################################################################################
+###########################################################
 
 $something{"version_string"} =
 "$script_name, version $script_version, $script_date\nAuthor $script_years Florian Heigwer\n";
@@ -234,9 +234,9 @@ print(
     ( $something{"version"} ? $something{"version_string"} : '' ),
     ( $something{"help"}    ? $something{"help_string"}    : '' )
 );
-###################################################################################################################################################################################################
+###########################################################
 # read in command line options
-###################################################################################################################################################################################################
+###########################################################
 
 #if(!can_run('bowtie') ){
 #	print "Cannot find bowtie. Please download and install from\n http://bowtie-bio.sourceforge.net/index.shtml\n";
@@ -248,9 +248,9 @@ print(
 #	exit;
 #}
 if ( $something{"GUI"} ) {
-    ###################################################################################################################################################################################################
+    ###########################################################
     # define the default parameters for the program
-    ###################################################################################################################################################################################################
+    ###########################################################
 
     #hardcode the choosable Kit presets
     %parameter_presets = ();
@@ -534,7 +534,7 @@ if ( $something{"GUI"} ) {
     $something{"targets-allowed"}          = 5;    #
     $something{"unspecific_leading_bases"} = 5;    #
     $something{"edit_distance_allowed"}    = 2;    #
-         #$something{"bowtie_mode"}="very-sensitive"							;#
+         #$something{"bowtie_mode"}="very-sensitive		;#
     $something{"ignore_intergenic"} = 0;    #
     $something{"sec_off_target"}    = 0;    #
 
@@ -588,9 +588,9 @@ if ( $something{"GUI"} ) {
     $something{"sort_by_rank"}           = 0;
     $something{"working_path"}           = "/data";
     $something{"custom_score"} = $something{"default_custom_score"} = '
-			##########################################################################################
+			#########################################
 			# Adapted to perl after Doench et al. 2014, NAt. Biotechnology
-			##########################################################################################
+			############################################
 			sub {
 				my $score;  
 				if (length($_[0])==30) {
@@ -636,8 +636,8 @@ if ( $something{"GUI"} ) {
 				}
 			};';
 
-    ###################################################################################################################################################################################################
-    ###################################################################################################################################################################################################
+    ###########################################################
+    ###########################################################
 
     open( $temp_file, ">", "temp" ) or die $!;
     print $temp_file ';=================================================
@@ -859,9 +859,9 @@ if ( $something{"GUI"} ) {
 
     # Set it to e frame widget
 
-    ###################################################################################################################################################################################################
+    ###########################################################
 # create a graphical user interface (GUI) to render inputs and output in a human radble form
-    ###################################################################################################################################################################################################
+    ###########################################################
 
     $mw = MainWindow->new( -title => "cld parameter", );
     $mw->minsize( 500, 500 );
@@ -2533,10 +2533,10 @@ if ( $something{"GUI"} ) {
         -sticky     => "nw"
     );
 
-    ###########################################################################################################################################################################
-    ###########################################################################################################################################################################
+    ###################################
+    ###################################
 
-    ###########################################################################################################################################################################
+    ###################################
     $trigger_page = $end_to_end->add( 'page9', -label => 'Start Analysis' );
     $trigger_frame =
       $trigger_page->Frame( -borderwidth => 2, -relief => 'groove' );    #
@@ -2601,7 +2601,7 @@ if ( $something{"GUI"} ) {
     );
     tie *STDOUT, 'Tk::Text', $results_text;
     $results_text->grid( -row => 2, -column => 1 );
-    ####################################################################################################################################################################################################################################
+    ############################################################################################
     $tk_dressing = Tk::Dressing->new();
     $theme       = 'theme';               #$tk_dressing->get_current_theme;
     $tk_dressing->load_theme_file( $theme, "temp" );
@@ -3318,12 +3318,12 @@ sub build_tree {
 }
 
 =head2 round_digits
-#########################################################################################
+#############################################################################
 #name:      round_digits
 #function:  cutoff after certain number of digits
 #input:     (float number as string, digits after komma <int>) 
 #output:    shortened float
-#########################################################################################
+##########################################################################
 =cut
 
 sub round_digits {
@@ -3334,7 +3334,7 @@ sub round_digits {
 }
 
 =head2 make_mismatch_string
-#########################################################################################
+###############################################################################
 #name:      make_mismatch_string
 #function:  convert a SAM file format mismatch string into an "Mismatch string" 
 #           M for every match X for every mismatch D for every deletion I for every 
@@ -3342,7 +3342,7 @@ sub round_digits {
 #input:     (Sequence as string-reference, $something{"unspecific_leading_bases"},
 #           direction) 
 #output:    shortened float
-#########################################################################################
+###############################################################################
 =cut
 
 sub make_mismatch_string {
@@ -3404,13 +3404,13 @@ sub make_mismatch_string {
 }
 
 =head2 print_offtarget_string
-#########################################################################################
+################################################################################
 #name:      print_offtarget_string
 #function:  convert a "Mismatch string" into html output with different color-highlighting
 #           for M,X,D and I
 #input:     (Mismatch string) 
 #output:    converted string for html output
-#########################################################################################
+###############################################################################
 =cut
 
 sub print_offtarget_string {
@@ -3424,13 +3424,13 @@ sub print_offtarget_string {
 }
 
 =head2 score_micro_homolgy
-#########################################################################################
+###############################################################################
 #name:      score_micro_homolgy
 #function:  calculate an microhomology score between 0 and 12 for a qiven position in a 
 # indexed sequence
 #input:     (indices hash of hashes, threshold int,length int, sequence ref to string ) 
 #output:    micro homolgy score (int)
-#########################################################################################
+###############################################################################
 =cut
 
 sub score_micro_homolgy {
@@ -3513,16 +3513,13 @@ sub hor_bar_chart {
       <tbody>
         <tr>
           <td style="font-size: 0.6em;">S</td><td class="bar"><div style="width: '
-      . $_[0]
-      . 'px;" class="item1"></div></td>
+      . $_[0] . 'px;" class="item1"></div></td>
            </tr><tr>
           <td style="font-size: 0.6em;">A</td><td class="bar"><div style="width: '
-      . $_[1]
-      . 'px;" class="item2"></div></td>
+      . $_[1] . 'px;" class="item2"></div></td>
            </tr><tr>
           <td style="font-size: 0.6em;">E</td><td class="bar"><div style="width: '
-      . $_[2]
-      . 'px;" class="item3"></div></td>
+      . $_[2] . 'px;" class="item3"></div></td>
         </tr>
       </tbody>
     </table> ';
@@ -3944,8 +3941,8 @@ sub create_popup {
     my $insert     = 0;
 
     if ( $line[24] eq "rc" )
-    { #turn and translate the match and querry string if direction is 
-    #  reverse complementary
+    {    #turn and translate the match and querry string if direction is
+            #  reverse complementary
         $querry = reverse_comp( $line[5] );
         $querry =~ s/\s+//ig;
         $querry =~ s/^(\w{2})\w(\w+)/$1N$2/ig;
@@ -3957,8 +3954,8 @@ sub create_popup {
         $adjust = $_[2];
     }
 
-#search the target-string in database - substr workaround used, because the 
-#Bioperl function does not work proper with large numbers
+    #search the target-string in database - substr workaround used, because the
+    #Bioperl function does not work proper with large numbers
     my $db =
       Bio::DB::Fasta->new( $_[1] . '.all.dna.fa', -makeid => \&make_my_id );
     my @target_name = split( "::", $line[18] );
@@ -4057,16 +4054,15 @@ sub create_popupD {
           length( $match[0] ) +
           $_[3] -
           ( $leadingbases * 2 ) -
-          ( $deletion0 * 2 )
-          ; # end of the match + spacer size + length of the 
-          #  matchstring + the wanted overflow on the right side - 
-          #the count of unspec leadingbases*2 (1st and 2nd)
+          ( $deletion0 * 2 );   # end of the match + spacer size + length of the
+            #  matchstring + the wanted overflow on the right side -
+            #the count of unspec leadingbases*2 (1st and 2nd)
     }
     else {
         $querry[1] = reverse_comp( $querry[1] );
 
-#swap both query and matchstring and change the start and end points 
-#($line[15] is no longer the start of the target cause the first query swaped)
+  #swap both query and matchstring and change the start and end points
+  #($line[15] is no longer the start of the target cause the first query swaped)
         @querry[ 0, 1 ] = @querry[ 1, 0 ];
         @match[ 0,  1 ] = @match[ 1,  0 ];
         $match0 = $match[0];
@@ -4083,16 +4079,15 @@ sub create_popupD {
           length( $match[0] ) -
           $_[3] +
           $leadingbases - 1 -
-          $deletion1
-          ; # swaped of the if-clause and reverted (-/+), but only the 
-          #leadingbases of the 2nd string count here
+          $deletion1; # swaped of the if-clause and reverted (-/+), but only the
+                      #leadingbases of the 2nd string count here
         $end =
           $line[19] +
           $_[3] -
           $leadingbases -
           ( $deletion0 * 2 )
-          ; # swaped of the if-clause and reverted (-/+), but only the 
-          #leadingbases of the 1st string count here
+          ;           # swaped of the if-clause and reverted (-/+), but only the
+                      #leadingbases of the 1st string count here
     }
 
     if ( $start < 0 ) {
@@ -4112,8 +4107,8 @@ sub create_popupD {
         $spacer .= " ";
     }
 
-#search the target-string in database - substr workaround used, because 
-#the Bioperl function does not work proper with large numbers
+    #search the target-string in database - substr workaround used, because
+    #the Bioperl function does not work proper with large numbers
     my $db =
       Bio::DB::Fasta->new( $_[1] . '.all.dna.fa', -makeid => \&make_my_id );
     my @target_name = split( "::", $line[17] );
@@ -4416,8 +4411,8 @@ sub make_a_crispr_library {
         print $temp_dir , "\n";
         mkdir($temp_dir) or die $!;
 
-#read in the parameter file, must contain each parameter with name 
-# and value '=' separated, without any quotes
+        #read in the parameter file, must contain each parameter with name
+        # and value '=' separated, without any quotes
         open( my $parameterfile, "<", $_[0] )
           or die $_[0] . "could not be opened. No such file or directory.";
         foreach my $element (<$parameterfile>) {
@@ -4473,9 +4468,9 @@ sub make_a_crispr_library {
         }
     }
     #######################################################################
-# For ENSEMBLE: define the path to the bowtie index and do checks if an 
-# database entry is found for the ensemble accesion number - if all checks 
-# passed, create the $seqio_obj
+    # For ENSEMBLE: define the path to the bowtie index and do checks if an
+    # database entry is found for the ensemble accesion number - if all checks
+    # passed, create the $seqio_obj
     #######################################################################
     if (   $something{"data_type"} eq "ensemble_acc"
         || $something{"data_type"} eq "gene_symbol" )
@@ -4513,9 +4508,9 @@ sub make_a_crispr_library {
     }
     elsif ( $something{"data_type"} eq "fasta" ) {
         #################################################################
-# For FASTA: define the path to the bowtie index and do checks if the fasta 
-# sequence/file is in the right format - if all checks passed, 
-# create the $seqio_obj
+     # For FASTA: define the path to the bowtie index and do checks if the fasta
+     # sequence/file is in the right format - if all checks passed,
+     # create the $seqio_obj
         #####################################################################
         my $count = 0;
         my $temp  = "";
@@ -4552,8 +4547,8 @@ sub make_a_crispr_library {
           )
           or die
 "Your input wasn't FASTA format \n e.g.: >some Sequence<br>AGCTGATCGATCTAGCTAGCTGCTAGCTAGTCGATCGATGCTAGCTAGCTAGCTGCTAG\n"
-          ; #if neither online or pasted sequences are used it will use the 
-            #    input file as sequence input
+          ;    #if neither online or pasted sequences are used it will use the
+               #    input file as sequence input
     }
     elsif ( $something{"data_type"} eq "coordinates" ) {
         my $db = Bio::DB::Fasta->new( $databasepath . '.dna.toplevel.fa',
@@ -4596,8 +4591,8 @@ sub make_a_crispr_library {
     my $fname              = "";
     my $dont_asses_context = 0;
     ###################################################################
-#start the main loop which is looping through the sequence found in the 
-# SeqIO object, may be one or many more
+    #start the main loop which is looping through the sequence found in the
+    # SeqIO object, may be one or many more
     #############################################################
     my %statistics  = ();
     my %CRISPR_hash = ();
@@ -4614,20 +4609,20 @@ sub make_a_crispr_library {
         my %statistics  = ();
         my %CRISPR_hash = ();
 
-#find the genomic coordinates of the sequence either directly from the 
-#fasta sequence or from other smyces
+        #find the genomic coordinates of the sequence either directly from the
+        #fasta sequence or from other smyces
         my $chrom           = "";    #create an empty name chromosome
         my $location_offset = 0;
         my $location_end    = 0;     #set the location offset value to 0
         if ( ( $seq_obj->description ) =~ m/chrom:([\w\.]+):(\d+)..(\d+)/ig )
-        { #if the descrition of the sequence contains information of the form 
+        {    #if the descrition of the sequence contains information of the form
                 #loc=chr1:0..13000000
                 #print the result of the pattern matching
             $chrom = $1;   #save the location information in the certain objects
             $location_offset = $2;
-            $location_end    = $3
-              ; #the location offset is the start of the sequence on that 
-                 #certain chromosome, for the whole chromosome this is of cause 0
+            $location_end =
+              $3;    #the location offset is the start of the sequence on that
+                #certain chromosome, for the whole chromosome this is of cause 0
             if ( !exists $trees{$chrom} ) {
                 $trees{$chrom} =
                   build_tree( $something{"databasepath"}
@@ -4651,9 +4646,9 @@ sub make_a_crispr_library {
         if ( $chrom eq "" ) {
             $chrom = $fname;
         }    #if $chrom is still empty fill it with the sequence' id
-        my $whole_seq = $seq_obj->seq
-          ; #deduce the complete nucleotide sequence as a alphanumerical 
-            # string from the SeqIo object
+        my $whole_seq = $seq_obj
+          ->seq;    #deduce the complete nucleotide sequence as a alphanumerical
+                    # string from the SeqIo object
         if ( $statistics{$fname}{"seq_length"} != 0 ) {
             if ( int( log( $statistics{$fname}{"seq_length"} ) ) <= 8 ) {
                 if ( int( log( $statistics{$fname}{"seq_length"} ) ) >= 2 ) {
@@ -4680,8 +4675,8 @@ sub make_a_crispr_library {
         ######################################################################
         if ( !( -e $temp_dir . "/" . $fname . '.json' ) ) {
             if ( !exists $CRISPR_hash{$fname} )
-            { #only execute following calucaltions if it is not already 
-              #done for the sequence
+            {    #only execute following calucaltions if it is not already
+                    #done for the sequence
                 my @findings = find_and_print_CRISPRS(
                     \$seq_obj,        $chrom,              $location_offset,
                     \%trees,          $dont_asses_context, $temp_dir,
@@ -4705,7 +4700,7 @@ sub make_a_crispr_library {
         print "$fname has been searched for designs. Search is done "
           . ( $seqcount / $maxcount * 100 ) . " %.\n";
         if ( defined $something{"GUI"} ) { $mw->update; }
-    } # end the loop after Hash and statistic were created, so the Bowtie 
+    }    # end the loop after Hash and statistic were created, so the Bowtie
          #Magic will be executed only once
     %statistics  = ();
     %CRISPR_hash = ();
@@ -4930,7 +4925,7 @@ sub make_a_crispr_library {
                 }
             }
         }
-        
+
         my $id  = "";
         my $seq = "";
         open( my $bowtie, "<", $temp_dir . "/temp_out.bwt" );
@@ -5032,9 +5027,9 @@ sub make_a_crispr_library {
                             if ( $something{"offtargetdb"} eq "genomeDNA" ) {
                                 my $namestuff = "";
                                 if ( !exists $trees{ $line[2] } )
-                                { #TODO if und else fast identisch, aber relativ 
-                                  #kurzer Part und daher Funktion 
-                                  #performancetechnisch nachteilig
+                                { #TODO if und else fast identisch, aber relativ
+                                        #kurzer Part und daher Funktion
+                                        #performancetechnisch nachteilig
                                     $trees{ $line[2] } =
                                       build_tree( $something{"databasepath"}
                                           . $something{"ref_organism"} . "/"
@@ -5124,8 +5119,8 @@ sub make_a_crispr_library {
         if ( $something{"sec_off_target"} == 1 ) {    #ckeck if this is wanted
             #################################################################
 
-#do send a bowtie2 job fot the two temporary written fasta files as if they 
-#were paired seqencing reads and save the result in a ~out.bwt file
+     #do send a bowtie2 job fot the two temporary written fasta files as if they
+     #were paired seqencing reads and save the result in a ~out.bwt file
             system( 'bowtie2 -p '
                   . $parallel_number
                   . '  -f -k '
@@ -5277,9 +5272,9 @@ sub make_a_crispr_library {
             my @line = split( "\t", $line );
             if ( $line[2] ne "*" ) {
 
-#decide if it is forward (fw) or backward (rc) query-sequence - only for 
-#the first pair, the 2nd will be the oposite - Workaround: oposite 
-#interpretation of the flag-numbers
+        #decide if it is forward (fw) or backward (rc) query-sequence - only for
+        #the first pair, the 2nd will be the oposite - Workaround: oposite
+        #interpretation of the flag-numbers
                 my $direction = "fw";
                 if (   $line[1] == 97
                     || $line[1] == 99
@@ -5322,11 +5317,14 @@ sub make_a_crispr_library {
                                         (
                                             $direction eq "fw"
                                             && $matchstringo[
-                                            scalar(@matchstringo) - 1 ] ne "X"
+                                            scalar(@matchstringo) - 1
+                                            ] ne "X"
                                             && $matchstringo[
-                                            scalar(@matchstringo) - 2 ] ne "X"
+                                            scalar(@matchstringo) - 2
+                                            ] ne "X"
                                             && $matchstringo[
-                                            scalar(@matchstringo) - 3 ] ne "X"
+                                            scalar(@matchstringo) - 3
+                                            ] ne "X"
                                         )
                                         || (   $direction eq "rc"
                                             && $matchstringo[0] ne "X"
@@ -5336,11 +5334,11 @@ sub make_a_crispr_library {
                                   )
                                 {
                                     my $namestuff = "";
-                                    if ( !exists $trees{ $line[2] } )
-                                    { 
-                                        #TODO if und else fast identisch, 
-                                        #aber relativ kurzer Part und daher 
-                                        #Funktion performancetechnisch nachteilig
+                                    if ( !exists $trees{ $line[2] } ) {
+
+                                       #TODO if und else fast identisch,
+                                       #aber relativ kurzer Part und daher
+                                       #Funktion performancetechnisch nachteilig
                                         $trees{ $line[2] } =
                                           build_tree( $something{"databasepath"}
                                               . $something{"ref_organism"} . "/"
@@ -5432,11 +5430,14 @@ sub make_a_crispr_library {
                                         (
                                             $direction eq "fw"
                                             && $matchstringo[
-                                            scalar(@matchstringo) - 1 ] ne "X"
+                                            scalar(@matchstringo) - 1
+                                            ] ne "X"
                                             && $matchstringo[
-                                            scalar(@matchstringo) - 2 ] ne "X"
+                                            scalar(@matchstringo) - 2
+                                            ] ne "X"
                                             && $matchstringo[
-                                            scalar(@matchstringo) - 3 ] ne "X"
+                                            scalar(@matchstringo) - 3
+                                            ] ne "X"
                                         )
                                         || (   $direction eq "rc"
                                             && $matchstringo[0] ne "X"
@@ -5594,7 +5595,7 @@ sub make_a_crispr_library {
                 }
                 else {
                     $statistics{$fname}
-                      {"Number of designs that do not hit a secondary target"
+                      { "Number of designs that do not hit a secondary target"
                       }++;
                 }
             }
@@ -5640,8 +5641,8 @@ sub make_a_crispr_library {
 
     #close($debug_log);
     ##############################################################
-#reopen the main loop which is looping through the sequence found in the 
-#SeqIO object, may be one or many more
+    #reopen the main loop which is looping through the sequence found in the
+    #SeqIO object, may be one or many more
     ##########################################################################
     $seqio_obj = Bio::SeqIO->new(
         -file   => $temp_dir . "/tempfile.fasta",
@@ -6867,10 +6868,10 @@ sub make_a_crispr_library {
                 print $gfffile "eff_score="
                   . ${ ${ $CRISPR_hash{$fname} }{$key} }{"custom_score"} . "; ";
 
-#die "correct the PAM in the output gff\nALSO CORRECT IN E_CRISP V5
-#\nAdd the option to sort by new DOENCH score\nadd option to also sort 
-#by DOENCH off-target score\nStore all other options in something\n
-#Manage GUI option\n";
+          #die "correct the PAM in the output gff\nALSO CORRECT IN E_CRISP V5
+          #\nAdd the option to sort by new DOENCH score\nadd option to also sort
+          #by DOENCH off-target score\nStore all other options in something\n
+          #Manage GUI option\n";
                 if ( $something{"kind"} eq "single" ) {
                     if ( $something{"PAM_location"} eq "5_prime" ) {
 
@@ -6991,7 +6992,7 @@ sub make_a_crispr_library {
         $zip->writeToFileNamed( $temp_dir . '/' . $fname . '.zip' );
 
         #######################################################################
-# Print the report site with the results (header was created earlier in loop)
+   # Print the report site with the results (header was created earlier in loop)
         ######################################################################
         $CRISPR_cnt{$fname}++;
         print "$fname is completed 100%\n";
@@ -7158,8 +7159,8 @@ sub find_and_print_CRISPRS {
         $cut = $cut + $cutnumber;
     }
     ##########################################################################
-# cut the sequence into equal peaces, so that each forked child can work 
-#  on one part (paralell!)
+    # cut the sequence into equal peaces, so that each forked child can work
+    #  on one part (paralell!)
     #####################################################################
 
     foreach $cut (@cuts) {
@@ -7552,8 +7553,8 @@ sub find_and_print_CRISPRS {
         }
 
         ###############################################################
-#store the CRISPR and the Statistics in temporary files - for each child
-#process and end the fork
+        #store the CRISPR and the Statistics in temporary files - for each child
+        #process and end the fork
         #######################################################
 
         {
@@ -7576,8 +7577,8 @@ sub find_and_print_CRISPRS {
     }
 
     ##########################################################################
-#parent wait till all children are done and then rebuild the CRISPR and the 
-#Statistics out of the temporary files
+    #parent wait till all children are done and then rebuild the CRISPR and the
+    #Statistics out of the temporary files
     ########################################################################
 
     $pm->wait_all_children();
@@ -7642,15 +7643,9 @@ sub make_database {
         system( '
 			rsync -av --progress ' . $_[1] . 'gtf/' . $_[0] . '/ .;
 			rsync -av --progress --exclude "*abinitio*" '
-              . $_[1]
-              . 'fasta/'
-              . $_[0]
-              . '/cdna/ .;
+              . $_[1] . 'fasta/' . $_[0] . '/cdna/ .;
 			rsync -av --progress --exclude "*primary_assembly*" --exclude "*dna_rm*" --exclude "*dna.chromosome*" --exclude "*dna_sm*" '
-              . $_[1]
-              . 'fasta/'
-              . $_[0]
-              . '/dna/ .;
+              . $_[1] . 'fasta/' . $_[0] . '/dna/ .;
 		' );
         print "All files were dowloaded\n";
         print "Step 2 of 7: Processing downloaded files...\n";
@@ -8132,9 +8127,9 @@ sub include_cpg {
                       . $line[1] . "_"
                       . $line[2] . "\t"
                       . $line[1] . "\t"
-                      . $line[2] . "\n"
-                      ; #add CpG_[start]_[stop]\t[start]\t[stop] 
-                        #to [seqname]_indexed.mygff
+                      . $line[2]
+                      . "\n";    #add CpG_[start]_[stop]\t[start]\t[stop]
+                                 #to [seqname]_indexed.mygff
                 }
                 close INFILE;
                 close OUTFILE;
@@ -8503,7 +8498,7 @@ sub predict_cpg_islands {
                 print OUT "CpG island "
                   . "$q,$cpginf[$m-1]->[0],$cpginf[$m-1]->[1],$cpginf[$m-1]->[2],$cpginf[$m-1]->[3],$cpginf[$m-1]->[4]\n";
 
-               $q++;
+                $q++;
             }
         }
         if ( $q == 1 ) {
@@ -8549,7 +8544,7 @@ sub comp {
 }
 ############################################################################
 #name:      translate_IUPAC
-#function:  translate an DNA IUPAC code to ACGT basepaircode in 
+#function:  translate an DNA IUPAC code to ACGT basepaircode in
 #               regular expression, perl style
 #input:     < string >
 #output:    < string >
@@ -8573,7 +8568,7 @@ sub translate_IUPAC {
 }
 ######################################################################
 #name:      from_pam_to_fasta_combis
-#function:  find every possble ACGT sequence out of any given IUPAC 
+#function:  find every possble ACGT sequence out of any given IUPAC
 #              sequence of any given length
 #input:     string
 #output:    string
@@ -8633,7 +8628,7 @@ sub rev_com_IUPAC {
 
 ##########################################################################
 #name:      calc_doench_score
-#function:  Calculate CRISPR Score after Doench et al. 2014 Rational design 
+#function:  Calculate CRISPR Score after Doench et al. 2014 Rational design
 #              of highly active sgRNAs for CRISPR-Cas9�mediated gene i
 #              nactivation
 #input:     < string > #lengt 30 mandatory
@@ -8745,9 +8740,9 @@ sub calc_doench_score {
 }
 ##############################################################################
 #name:      calc_XU_score
-#function:  Calculate CRISPR Score after XU et al. 2015 Sequence determinants 
+#function:  Calculate CRISPR Score after XU et al. 2015 Sequence determinants
 #             of improved CRISPR sgRNA design
-#input:     < string > #lengt 30 mandatory 20 Protspacer followed by 10 
+#input:     < string > #lengt 30 mandatory 20 Protspacer followed by 10
 #                 including NGG PAM
 #output:    <numeric double>
 ##############################################################################
