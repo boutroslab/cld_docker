@@ -76,6 +76,7 @@ RUN perl -MCPAN -e 'CPAN::Shell->install("Tk")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("IPC::Cmd")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Getopt::Long")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("File::Grep")'
+RUN perl -MCPAN -e 'CPAN::Shell->install("File::Spec")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Text::Wrap")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Unix::Processors")'
 RUN perl -MCPAN -e 'CPAN::Shell->install("Tk::PathEntry")'					#loads the interactive pathentry widget
@@ -98,6 +99,7 @@ RUN perl -MCPAN -e 'CPAN::Shell->install("Timer::Runtime")'
 ENV BOWTIE2_VERSION 2.4.5
 ENV BOWTIE_VERSION 1.3.1
 
+# Install BowTie and BowTie2
 RUN wget https://downloads.sourceforge.net/project/bowtie-bio/bowtie2/$BOWTIE2_VERSION/bowtie2-$BOWTIE2_VERSION-linux-x86_64.zip \
     && unzip -d /usr/bin bowtie2-$BOWTIE2_VERSION-linux-x86_64.zip
     

@@ -93,6 +93,16 @@ docker run -v ${PWD}:/data boutroslab/cld_docker cld --help
 cld can be called either with “--version”, printing its version number and copyrights, 
 "--help" printing a more elusive help documentation and with “--task”. 
 
+---
+**NOTE**
+
+The output directory defaults to `/data` within the Docker container. 
+You can overwrite this by setting `--output-dir` to any other directory
+within the container. Make sure that you mount your local directory to the
+output directory when use run the Docker container: e.g. `-v ${PWD}:/data`
+
+---
+
 EXAMPLE to execute from the path containing all needed files:
 
 ```bash
@@ -140,5 +150,5 @@ are chosen. Since the end_to_end task takes most time we benchmarked its time
 consumption to be approximately 1 h wall-time for an 8-core cpu node.
 
  	
-For running cld from the command line the syntax as outlined in the [MANUAL](https://github.com/boutroslab/cld/blob/master/MANUAL.md) must be used.
+For running cld from the command line the syntax as outlined in the [MANUAL](https://github.com/boutroslab/cld_docker/blob/master/MANUAL.md) must be used.
 
